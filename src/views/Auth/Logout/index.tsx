@@ -14,7 +14,7 @@ class Logout extends React.Component<ILogoutProps> {
     render() {
         return (
             <div>
-                dlslfm
+                this shouldn't show
             </div>
         );
     }
