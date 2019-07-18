@@ -6,6 +6,7 @@ import { EventRegistration, EventInformation, FanMailForm } from '../../componen
 import InfluencerOverview from './InfluencerOverview';
 import { Query } from 'react-apollo'
 import { gql } from "apollo-boost"
+import FanSubmission from '../../components/fanmail/FanSubmission';
 
 export interface IInfluencerLandingProps extends RouteComponentProps<IInfluencerRouteParamProps> {
     routes: RouteComponentProps[]
@@ -16,7 +17,7 @@ interface IInfluencerLandingState {
 
 export interface IInfluencerRouteParamProps {
     influencerID: string
-    eventid: string
+    eventID: string
 }
 
 class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInfluencerLandingState> {
@@ -64,8 +65,9 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                                                     }
                                                 />
                                                 <Route exact path='/in/:influencerID/send' render={props => <FanMailForm {...props} influencerID={influencer.id} />} />
-                                                <Route exact path='/in/:influencerID/event/:eventid' component={EventInformation} />
-                                                <Route exact path='/in/:influencerID/event/:eventid/register' component={EventRegistration} />
+                                                <Route exact path='/in/:influencerID/submission/:videoID' render={props => <FanSubmission {...props} influencerID={influencer.id} />} />
+                                                <Route exact path='/in/:influencerID/event/:eventID' component={EventInformation} />
+                                                <Route exact path='/in/:influencerID/event/:eventID/register' component={EventRegistration} />
                                             </Grid.Column>
                                         </Grid.Row>
                                         <Grid.Row>

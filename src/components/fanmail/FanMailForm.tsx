@@ -2,10 +2,13 @@ import * as React from 'react';
 import { Form, Button, Card, Icon, Modal } from 'semantic-ui-react';
 import { Formik, FormikActions, FormikErrors } from 'formik'
 import { withRouter, RouteComponentProps } from 'react-router';
-import { IInfluencerRouteParamProps } from '../../views/Influencer';
 import firebase from 'firebase'
-import { client } from '../..';
 import { gql } from 'apollo-boost';
+import uuid from 'uuid/v4';
+
+// 
+import { client } from '../..';
+import { IInfluencerRouteParamProps } from '../../views/Influencer';
 import { FirebaseAuthContext } from '../../views/Auth/FirebaseAuthProvider';
 import { ErrorResponse } from 'apollo-link-error';
 import SignIn from '../../views/Auth/SignIn';
@@ -33,7 +36,7 @@ const storage = firebase.storage();
 const videoStorageRef = storage.ref();
 
 
-const acceptedVideoTypes: string[] = ['video/mp4', 'video/x-m4v', 'video/*']
+const acceptedVideoTypes: string[] = ['video/mp4']
 
 const MUTATION_FAN_MAIL_SUBMISSION = gql`
     mutation(
@@ -69,19 +72,26 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
     }
 
     saveVideoAndInformation(values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) {
+        const videoID = uuid()
         // 1. SAVE VIDEO TO FIREBASE
-        videoStorageRef.child('videos/testme2')
+        videoStorageRef.child('videos/' + videoID)
             .put(this.state.video!)
             .then(async snapshot => {
 
                 console.log('Uploaded a blob or file!', snapshot);
                 console.log('Uploaded a blob or file!', videoStorageRef.child('videos/testme2').getDownloadURL());
+                let video_url = ""
+                await snapshot.ref.getDownloadURL().then(url => {
+                    console.log('url', url)
+                    video_url = url
+                })
+
                 // 2. SAVE FUN SUBMISSION INFO TO POSTGRES DB
                 const submission = await client.mutate({
                     mutation: MUTATION_FAN_MAIL_SUBMISSION, variables: {
                         title: values.title,
                         description: values.description,
-                        video_url: snapshot.metadata.bucket + '/' + snapshot.metadata.fullPath,
+                        video_url: video_url,
                         video_thumbnail_url: "random",
                         influencer_id: this.props.influencerID,
                         from_id: "cjy2drw0v004g0977v9ftnv4f"
@@ -96,6 +106,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                     .catch((err: ErrorResponse) => {
                         console.log(err)
                         // 3. Set submitting back to false after competition
+                        actions.setError(err)
                         actions.setSubmitting(false)
                     })
 
@@ -104,12 +115,9 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
     }
 
     render() {
-        videoStorageRef.child('videos/testme2').getDownloadURL().then(url => console.log('url', url))
+
         return (
-
             <Card fluid>
-
-
                 <Card.Content>
                     <Card.Header>
                         <Icon
@@ -138,12 +146,24 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                         if (this.state.video) {
                                             const { type } = this.state.video!
                                             if (!acceptedVideoTypes.includes(type))
-                                                this.setState({ errorMessage: 'The video you selected is not a valid video type. Try converting to MP4 if having issues.' })
+                                                this.setState({ errorMessage: 'The video you selected is not a valid type. We currently only accept MP4. You can find many converters on google.' })
                                         } else this.setState({ errorMessage: 'Please submit a video..' })
 
                                         return errors;
                                     }}
                                     onSubmit={(values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) => {
+                                        const { type, size } = this.state.video!
+
+                                        if (!acceptedVideoTypes.includes(type)) {
+                                            actions.setSubmitting(false)
+                                            return
+                                        }
+                                        // size of 1 minute 1080p @ 30fps
+                                        if (size > 130 * 1024 * 1024) {
+                                            this.setState({ errorMessage: "Please submit a video less than 130MB in size. This is 1 minute @ 1080p 30fps." })
+                                            actions.setSubmitting(false)
+                                            return
+                                        }
                                         if (!isUserSignedIn) {
                                             this.setState({ loginModalOpen: true })
                                             actions.setSubmitting(false)
@@ -171,9 +191,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                                                 afterSignIn={() => {
                                                                     this.setState({ loginModalOpen: false })
                                                                     handleSubmit()
-                                                                    // TODO: Continue upload
                                                                 }}
-                                                            // afterLogin={() => this.setState({ loginModalOpen: false })}
                                                             />
                                                             <br /><br />
                                                         </div>
@@ -212,14 +230,13 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
 
                                                 {/* Video Upload */}
                                                 <Form.Field required>
-                                                    <label>Video Upload</label>
+                                                    <label>Video Upload - 1 Minute Limit</label>
                                                     <Form.Input
                                                         error={this.state.errorMessage.length > 0 && this.state.errorMessage}
                                                         type='file'
                                                         name='video'
                                                         accept="video/mp4,video/x-m4v,video/*"
                                                         onChange={e => {
-                                                            console.log(e.target.files![0])
                                                             this.setState({ errorMessage: '', video: e.target.files![0] })
                                                         }}
                                                     />

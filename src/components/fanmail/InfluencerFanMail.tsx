@@ -24,7 +24,7 @@ class InfluencerFanMail extends React.Component<IInfluencerFanMailProps> {
                                 this.props.fanSubmissions.map((mail: IFanMail) => (
                                     <Card
                                         key={mail.id}
-                                        // onClick={() => this.props.history.push(`/${mail.to.id}/send`)}
+                                        onClick={() => this.props.history.push(`/in/${this.props.influencerID}/submission/${mail.id}`)}
                                     >
                                         <Image src={mail.video_thumbnail_url} />
                                         <Card.Content>
@@ -48,7 +48,7 @@ class InfluencerFanMail extends React.Component<IInfluencerFanMailProps> {
                 <Button
                     fluid
                     content='Submit Fan Mail'
-                    primary
+                    positive
                     onClick={() => this.props.history.push(`/in/${this.props.influencerID}/send`)}
                 />
             </Segment>
