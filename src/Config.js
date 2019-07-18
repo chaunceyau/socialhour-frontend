@@ -14,7 +14,7 @@ export const ROUTE_CONFIG = [
     {
         path: '/in/:influencerID',
         component: InfluencerLanding,
-    }
+    },
     {
         path: '/auth/signin',
         component: SignInScreen
