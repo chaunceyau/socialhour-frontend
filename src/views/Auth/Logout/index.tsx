@@ -14,7 +14,7 @@ class Logout extends React.Component<ILogoutProps> {
     render() {
         return (
             <div>
-                this shouldn't show up...
+                You will be redirected shortly.
             </div>
         );
     }
