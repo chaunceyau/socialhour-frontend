@@ -25,66 +25,62 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
         console.log("THIS>PROPS")
         console.log(this.props)
         return (
-            <Container>
-                <Segment>
-                    <Query
-                        query={QUERY_INFLUENCER_EVENTS_AND_MAIL}
-                        variables={{ influencerID: this.props.match.params.influencerID }}
-                    >
-                        {({ loading, error, data }: { loading: any, error?: any, data: any }) => {
-                            if (loading)
-                                return <span>loading</span>
-                            if (error)
-                                return <span>error</span>
-                            if (data) {
-                                const { influencer } = data
-                                return (
-                                    <Grid style={{ paddingTop: '1rem' }}>
-                                        <Grid.Row columns={2}>
-                                            <Grid.Column width={5}>
-                                                <InfluencerCard
-                                                    id={influencer.id}
-                                                    name={influencer.name}
-                                                    avatar_url={influencer.avatar_url}
-                                                    title={influencer.title}
-                                                />
-                                            </Grid.Column>
-                                            <Grid.Column width={11}>
-                                                <Route
-                                                    exact
-                                                    path='/in/:influencerID'
-                                                    render={
-                                                        props => (
-                                                            <InfluencerOverview
-                                                                {...props}
-                                                                influencerID={influencer.id}
-                                                                upcomingEvents={influencer.events}
-                                                                fanSubmissions={influencer.mail}
-                                                            />
-                                                        )
-                                                    }
-                                                />
-                                                <Route exact path='/in/:influencerID/send' render={props => <FanMailForm {...props} influencerID={influencer.id} />} />
-                                                <Route exact path='/in/:influencerID/submission/:videoID' render={props => <FanSubmission {...props} influencerID={influencer.id} />} />
-                                                <Route exact path='/in/:influencerID/event/:eventID' component={EventInformation} />
-                                                <Route exact path='/in/:influencerID/event/:eventID/register' component={EventRegistration} />
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <Segment>
-                                                    <Label attached='top' content='Similar Suggestions' />
-                                                    <div>Based on this user.. you might like</div>
-                                                </Segment>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                    </Grid>
-                                )
-                            }
-                        }}
-                    </Query>
-                </Segment>
-            </Container>
+            <Query
+                query={QUERY_INFLUENCER_EVENTS_AND_MAIL}
+                variables={{ influencerID: this.props.match.params.influencerID }}
+            >
+                {({ loading, error, data }: { loading: any, error?: any, data: any }) => {
+                    if (loading)
+                        return <span>loading</span>
+                    if (error)
+                        return <span>error</span>
+                    if (data) {
+                        const { influencer } = data
+                        return (
+                            <Grid style={{ paddingTop: '1rem' }} stackable>
+                                <Grid.Row columns={2}>
+                                    <Grid.Column width={5}>
+                                        <InfluencerCard
+                                            id={influencer.id}
+                                            name={influencer.name}
+                                            avatar_url={influencer.avatar_url}
+                                            title={influencer.title}
+                                        />
+                                    </Grid.Column>
+                                    <Grid.Column width={11}>
+                                        <Route
+                                            exact
+                                            path='/in/:influencerID'
+                                            render={
+                                                props => (
+                                                    <InfluencerOverview
+                                                        {...props}
+                                                        influencerID={influencer.id}
+                                                        upcomingEvents={influencer.events}
+                                                        fanSubmissions={influencer.mail}
+                                                    />
+                                                )
+                                            }
+                                        />
+                                        <Route exact path='/in/:influencerID/send' render={props => <FanMailForm {...props} influencerID={influencer.id} />} />
+                                        <Route exact path='/in/:influencerID/submission/:videoID' render={props => <FanSubmission {...props} influencerID={influencer.id} />} />
+                                        <Route exact path='/in/:influencerID/event/:eventID' component={EventInformation} />
+                                        <Route exact path='/in/:influencerID/event/:eventID/register' component={EventRegistration} />
+                                    </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row>
+                                    <Grid.Column>
+                                        <Segment>
+                                            <Label attached='top' content='Similar Suggestions' />
+                                            <div>Based on this user.. you might like</div>
+                                        </Segment>
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                        )
+                    }
+                }}
+            </Query>
         );
     }
 }

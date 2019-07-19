@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Button, Card, Icon, Modal } from 'semantic-ui-react';
+import { Form, Button, Card, Icon, Modal, Checkbox } from 'semantic-ui-react';
 import { Formik, FormikActions, FormikErrors } from 'formik'
 import { withRouter, RouteComponentProps } from 'react-router';
 import firebase from 'firebase'
@@ -27,6 +27,7 @@ interface IFanMailFormState {
 interface IFanMailFormValues {
     title: string
     description: string
+    tos_accepted: boolean
 }
 
 // Get a reference to the storage service, which is used to create references in your storage bucket
@@ -78,13 +79,10 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
             .put(this.state.video!)
             .then(async snapshot => {
 
-                console.log('Uploaded a blob or file!', snapshot);
-                console.log('Uploaded a blob or file!', videoStorageRef.child('videos/testme2').getDownloadURL());
                 let video_url = ""
                 await snapshot.ref.getDownloadURL().then(url => {
-                    console.log('url', url)
                     video_url = url
-                })
+                }).catch(err => { })
 
                 // 2. SAVE FUN SUBMISSION INFO TO POSTGRES DB
                 const submission = await client.mutate({
@@ -98,13 +96,11 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                     }
                 })
                     .then((info: any) => {
-                        console.log('info', info)
                         // 3. Set submitting back to false after competition
                         actions.setSubmitting(false)
                         this.props.history.push(`/in/${this.props.influencerID}`)
                     })
                     .catch((err: ErrorResponse) => {
-                        console.log(err)
                         // 3. Set submitting back to false after competition
                         actions.setError(err)
                         actions.setSubmitting(false)
@@ -123,7 +119,9 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                         <Icon
                             name='arrow left'
                             link
-                            onClick={() => { this.props.history.push(`/in/${this.props.match.params.influencerID}`) }}
+                            onClick={
+                                () => this.props.history.push(`/in/${this.props.match.params.influencerID}`)
+                            }
                         />
                         <span>&nbsp; Fan Mail Form</span>
                     </Card.Header>
@@ -133,37 +131,44 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                         {({ isUserSignedIn }) => {
                             return (
                                 <Formik
-                                    initialValues={{ title: '', description: '' }}
+                                    initialValues={{ title: '', description: '', tos_accepted: false }}
                                     validate={(values: IFanMailFormValues) => {
                                         let errors: FormikErrors<IFanMailFormValues> = {};
+                                        if (!values.tos_accepted)
+                                            errors.tos_accepted = "You must accept the Terms & Conditions and Privacy Policy to submit a video."
                                         // 1. CHECK VIDEO TITLE
                                         if (values.title.length < 2)
                                             errors.title = "Please enter a title at least 2 characters or longer."
+                                        if (values.title.length > 100)
+                                            errors.title = "Please enter a title less than 100 characters."
                                         // 2. CHECK VIDEO DESCRIPTION
                                         if (values.description.length < 2)
                                             errors.description = "Please enter a description at least 2 characters or longer."
-                                        // 2. CHECK VIDEO
-                                        if (this.state.video) {
-                                            const { type } = this.state.video!
-                                            if (!acceptedVideoTypes.includes(type))
-                                                this.setState({ errorMessage: 'The video you selected is not a valid type. We currently only accept MP4. You can find many converters on google.' })
-                                        } else this.setState({ errorMessage: 'Please submit a video..' })
+                                        if (values.description.length > 150)
+                                            errors.description = "Please enter a description less than 150 characters."
 
                                         return errors;
                                     }}
                                     onSubmit={(values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) => {
-                                        const { type, size } = this.state.video!
 
-                                        if (!acceptedVideoTypes.includes(type)) {
+                                        // 2. CHECK VIDEO
+                                        if (this.state.video) {
+                                            const { type, size } = this.state.video!
+                                            if (!acceptedVideoTypes.includes(type)) {
+                                                this.setState({ errorMessage: 'The video you selected is not a valid type. We currently only accept MP4. You can find many converters on google.' })
+                                                actions.setSubmitting(false)
+                                            }
+                                            // size of 30 seconds 1080p @ 30fps
+                                            if (size > 65 * 1024 * 1024) {
+                                                this.setState({ errorMessage: "Please submit a video less than 65MB in size. This is 1 minute @ 1080p 30fps." })
+                                                actions.setSubmitting(false)
+                                                return
+                                            }
+                                        } else {
+                                            this.setState({ errorMessage: 'Please submit a video..' })
                                             actions.setSubmitting(false)
-                                            return
                                         }
-                                        // size of 1 minute 1080p @ 30fps
-                                        if (size > 130 * 1024 * 1024) {
-                                            this.setState({ errorMessage: "Please submit a video less than 130MB in size. This is 1 minute @ 1080p 30fps." })
-                                            actions.setSubmitting(false)
-                                            return
-                                        }
+
                                         if (!isUserSignedIn) {
                                             this.setState({ loginModalOpen: true })
                                             actions.setSubmitting(false)
@@ -180,6 +185,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                         handleChange,
                                         handleBlur,
                                         handleSubmit,
+                                        setFieldValue,
                                         isSubmitting,
                                     }) => (
                                             <Form onSubmit={handleSubmit} loading={isSubmitting}>
@@ -230,7 +236,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
 
                                                 {/* Video Upload */}
                                                 <Form.Field required>
-                                                    <label>Video Upload - 1 Minute Limit</label>
+                                                    <label>Video Upload - 30 Second Limit (Longer options coming soon)</label>
                                                     <Form.Input
                                                         error={this.state.errorMessage.length > 0 && this.state.errorMessage}
                                                         type='file'
@@ -242,6 +248,17 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                                     />
                                                 </Form.Field>
 
+                                                <Form.Field>
+                                                    <Form.Checkbox
+                                                        error={errors.tos_accepted && touched.tos_accepted && errors.tos_accepted}
+                                                        name='tos_accepted'
+                                                        type="checkbox"
+                                                        label="I agree to the Terms and Conditions & Privacy Policy."
+                                                        onChange={() => setFieldValue('tos_accepted', !values.tos_accepted)}
+                                                        onBlur={handleBlur}
+                                                        checked={values.tos_accepted}
+                                                    />
+                                                </Form.Field>
                                                 {/*  */}
                                                 <Button
                                                     primary

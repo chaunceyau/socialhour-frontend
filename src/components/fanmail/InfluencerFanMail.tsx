@@ -15,7 +15,6 @@ class InfluencerFanMail extends React.Component<IInfluencerFanMailProps> {
                 <Label
                     attached='top'
                     content='Fan Submissions'
-                    color='green'
                 />
                 {
                     this.props.fanSubmissions.length > 0 ?
@@ -26,7 +25,7 @@ class InfluencerFanMail extends React.Component<IInfluencerFanMailProps> {
                                         key={mail.id}
                                         onClick={() => this.props.history.push(`/in/${this.props.influencerID}/submission/${mail.id}`)}
                                     >
-                                        <Image src={mail.video_thumbnail_url} />
+                                        <Image src={require('../../assets/placeholder.png')} />
                                         <Card.Content>
                                             <Card.Header>{mail.title}</Card.Header>
                                             <Card.Meta>

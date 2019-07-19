@@ -2,8 +2,12 @@ import Home from './views/Home';
 import InfluencerLanding from './views/Influencer';
 import SignInScreen from './views/Auth/SignIn';
 import Logout from './views/Auth/Logout';
+import CreateInfluencer from './components/admin/CreateInfluencer';
+import PrivacyPolicy from './views/TermsOfService/PrivacyPolicy';
+import TermsAndConditions from './views/TermsOfService/TermsAndConditions';
 
 export const COLOR_BACKGROUND_GREY = "#e6ecf0"
+export const PRIMARY_COLOR = "#F15642"
 
 export const ROUTE_CONFIG = [
     {
@@ -22,5 +26,17 @@ export const ROUTE_CONFIG = [
     {
         path: '/auth/logout',
         component: Logout
+    },
+    {
+        path: '/create-in',
+        component: CreateInfluencer
+    },
+    {
+        path: '/tos',
+        component: TermsAndConditions 
+    },
+    {
+        path: '/privacy',
+        component: PrivacyPolicy 
     }
 ]
