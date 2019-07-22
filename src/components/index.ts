@@ -7,10 +7,10 @@ import EventInformation from './event/EventInformation'
 import InfluencerEvents from './event/InfluencerEvents'
 // fanmail
 import FanMailForm from './fanmail/FanMailForm'
-import InfluencerFanMail from './fanmail/InfluencerFanMail'
+import TopFanSubmissions from './fanmail/TopFanSubmissions'
 
 export {
     Navigation, InfluencerCard, RouteWithSubRoutes,
     EventRegistration, EventInformation, InfluencerEvents,
-    FanMailForm, InfluencerFanMail
+    FanMailForm, TopFanSubmissions
 }

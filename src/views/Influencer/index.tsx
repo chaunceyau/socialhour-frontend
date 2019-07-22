@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Segment, Label, Grid, Container } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { InfluencerCard } from '../../components';
 import { withRouter, RouteComponentProps, Route } from 'react-router';
 import { EventRegistration, EventInformation, FanMailForm } from '../../components';
@@ -7,6 +7,7 @@ import InfluencerOverview from './InfluencerOverview';
 import { Query } from 'react-apollo'
 import { gql } from "apollo-boost"
 import FanSubmission from '../../components/fanmail/FanSubmission';
+import SimilarSuggestions from '../../components/SimilarSuggestions';
 
 export interface IInfluencerLandingProps extends RouteComponentProps<IInfluencerRouteParamProps> {
     routes: RouteComponentProps[]
@@ -70,10 +71,7 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                                 </Grid.Row>
                                 <Grid.Row>
                                     <Grid.Column>
-                                        <Segment>
-                                            <Label attached='top' content='Similar Suggestions' />
-                                            <div>Based on this user.. you might like</div>
-                                        </Segment>
+                                        <SimilarSuggestions influencerID={influencer.id} />
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, Icon, Segment } from 'semantic-ui-react';
+import { Card, Icon } from 'semantic-ui-react';
 
 export interface IEventRegistrationProps {
 }
@@ -25,7 +25,7 @@ export default class EventRegistration extends React.Component<IEventRegistratio
                     </Card.Content>
                     {/*  */}
                     <Card.Content>
-                  
+
                     </Card.Content>
                 </Card>
             </React.Fragment>

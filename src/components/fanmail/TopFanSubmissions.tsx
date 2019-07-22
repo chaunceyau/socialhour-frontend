@@ -2,13 +2,14 @@ import * as React from 'react';
 import { Segment, Label, Message, Button, Card, Image, Icon } from 'semantic-ui-react';
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { IFanMail } from '../../Interfaces';
+import { PRIMARY_COLOR } from '../../Config';
 
-export interface IInfluencerFanMailProps extends RouteComponentProps {
+export interface ITopFanSubmissionsProps extends RouteComponentProps {
     fanSubmissions: IFanMail[],
     influencerID: string
 }
 
-class InfluencerFanMail extends React.Component<IInfluencerFanMailProps> {
+class TopFanSubmissions extends React.Component<ITopFanSubmissionsProps> {
     render() {
         return (
             <Segment>
@@ -40,14 +41,15 @@ class InfluencerFanMail extends React.Component<IInfluencerFanMailProps> {
                         :
                         <Message
                             content="This user doesn't have any fan mail. Be the first to leave them a video!"
-                            warning
                         />
                 }
-                <br />
+                {
+                    this.props.fanSubmissions.length > 0 && <br />
+                }
                 <Button
                     fluid
                     content='Submit Fan Mail'
-                    positive
+                    style={{ color: 'white', backgroundColor: PRIMARY_COLOR }}
                     onClick={() => this.props.history.push(`/in/${this.props.influencerID}/send`)}
                 />
             </Segment>
@@ -56,4 +58,4 @@ class InfluencerFanMail extends React.Component<IInfluencerFanMailProps> {
 }
 
 
-export default withRouter(InfluencerFanMail) 
+export default withRouter(TopFanSubmissions) 

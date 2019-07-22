@@ -8,7 +8,7 @@ export interface IFooterProps {
 export default class Footer extends React.Component<IFooterProps> {
     render() {
         return (
-            <Segment inverted>
+            <Segment inverted style={{ flex: 1 }} >
                 <Grid>
                     <Grid.Row columns={3}>
                         <Grid.Column width={2}></Grid.Column>

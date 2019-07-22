@@ -4,17 +4,17 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Navigation } from './components'
 import { ROUTE_CONFIG, COLOR_BACKGROUND_GREY, PRIMARY_COLOR } from './Config'
 import FirebaseAuthProvider from './views/Auth/FirebaseAuthProvider';
-import { Segment, Container, Label, Header } from 'semantic-ui-react';
+import { Segment, Container, Header } from 'semantic-ui-react';
 import Footer from './components/Footer';
 
 export default class App extends React.Component {
     render() {
         return (
-            <div style={{ backgroundColor: COLOR_BACKGROUND_GREY, height: '100%' }}>
+            <div style={{ backgroundColor: COLOR_BACKGROUND_GREY, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 <FirebaseAuthProvider>
                     <Router>
                         <Navigation />
-                        <Container style={{ paddingTop: '1rem' }}>
+                        <Container style={{ paddingTop: '1rem', marginBottom: '2rem' }}>
                             <Segment attached='top' style={{ backgroundColor: PRIMARY_COLOR }}>
                                 <Header textAlign='center' style={{ color: 'white' }}>
                                     Influencer Fan Mail & Live Events

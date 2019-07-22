@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Button, Card, Icon, Modal, Checkbox } from 'semantic-ui-react';
+import { Form, Button, Card, Icon, Modal } from 'semantic-ui-react';
 import { Formik, FormikActions, FormikErrors } from 'formik'
 import { withRouter, RouteComponentProps } from 'react-router';
 import firebase from 'firebase'
@@ -106,6 +106,9 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                         actions.setSubmitting(false)
                     })
 
+                if (!submission) {
+                    // TODO: Issue if no submission, we need to handle.
+                }
             })
             .catch(err => actions.setError(err));
     }

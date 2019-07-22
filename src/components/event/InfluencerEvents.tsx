@@ -40,18 +40,3 @@ export default class InfluencerEvents extends React.Component<IInfluencerEventsP
         );
     }
 }
-
-
-
-const UPCOMING_EVENTS = [
-    {
-        id: 'f93j4m9f432',
-        title: 'Meet and Greet',
-        date: 'July 8, 2019'
-    },
-    {
-        id: '43f34jcwkc',
-        title: 'Meet and Greet 2',
-        date: 'July 20, 2019'
-    }
-]

@@ -8,11 +8,9 @@ export interface IFanSubmissionProps extends RouteComponentProps<{ videoID: stri
     influencerID: string
 }
 
-const VIDEO_URL = "https://firebasestorage.googleapis.com/v0/b/socialhour.appspot.com/o/videos%2Fcf5286ca-8713-4e39-8cd0-457cf573ac7d?alt=media"
 
 class FanSubmission extends React.Component<IFanSubmissionProps> {
   
-
     render() {
         if (!this.props.match.params.videoID)
             return (

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InfluencerFanMail, InfluencerEvents } from '../../components'
+import { TopFanSubmissions, InfluencerEvents } from '../../components'
 import { IFanMail, IEvent } from '../../Interfaces';
 
 export interface IInfluencerOverviewProps {
@@ -12,7 +12,7 @@ class InfluencerOverview extends React.Component<IInfluencerOverviewProps> {
     render() {
         return (
             <React.Fragment>
-                <InfluencerFanMail fanSubmissions={this.props.fanSubmissions} influencerID={this.props.influencerID} />
+                <TopFanSubmissions fanSubmissions={this.props.fanSubmissions} influencerID={this.props.influencerID} />
                 <InfluencerEvents upcomingEvents={this.props.upcomingEvents} />
             </React.Fragment>
         )
