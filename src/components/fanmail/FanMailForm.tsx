@@ -206,6 +206,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
 
                                         const now = moment(), lastSubmission = moment(data.lastSubmission).format(), difference = now.diff(lastSubmission, 'seconds')
                                         if (difference < 60) {
+                                            // TODO: what if lastSubmission is null?
                                             actions.setSubmitting(false)
                                             return this.setState({ errorMessage: `You must wait ${60 - difference} seconds before your next submission.` })
                                         }
