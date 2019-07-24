@@ -15,6 +15,7 @@
     "firebase": "^6.3.0",
     "formik": "^1.5.8",
     "graphql": "^14.4.2",
+    "moment": "^2.24.0",
     "opentok-accelerator-core": "*",
     "opentok-solutions-css": "*",
     "react": "^16.8.6",
