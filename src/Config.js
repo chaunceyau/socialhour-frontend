@@ -16,10 +16,10 @@ export const ROUTE_CONFIG = [
         component: Home,
         exact: true
     },
-    {
-        path: '/chron',
-        component: Chron
-    },
+    // {
+    //     path: '/chron',
+    //     component: Chron
+    // },
     {
         path: '/in/:influencerID',
         component: InfluencerLanding,
