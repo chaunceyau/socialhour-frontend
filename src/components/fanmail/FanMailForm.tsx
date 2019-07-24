@@ -1,18 +1,19 @@
 import * as React from 'react';
-import { Form, Button, Card, Icon, Modal } from 'semantic-ui-react';
+import { Form, Button, Card, Icon, Modal, Segment } from 'semantic-ui-react';
 import { Formik, FormikActions, FormikErrors } from 'formik'
 import { withRouter, RouteComponentProps } from 'react-router';
 import firebase from 'firebase'
-import { gql } from 'apollo-boost';
+import { gql, StoreObject } from 'apollo-boost';
 import uuid from 'uuid/v4';
-
+import moment from 'moment'
 // 
 import { client } from '../..';
-import { IInfluencerRouteParamProps } from '../../views/Influencer';
+import { IInfluencerRouteParamProps, QUERY_INFLUENCER_EVENTS_AND_MAIL } from '../../views/Influencer';
 import { FirebaseAuthContext } from '../../views/Auth/FirebaseAuthProvider';
 import { ErrorResponse } from 'apollo-link-error';
 import SignIn from '../../views/Auth/SignIn';
 import { COLOR_BACKGROUND_GREY } from '../../Config';
+import { DataProxy } from 'apollo-cache';
 
 export interface IFanMailFormProps extends RouteComponentProps<IInfluencerRouteParamProps> {
     influencerID: string
@@ -40,29 +41,46 @@ const videoStorageRef = storage.ref();
 const acceptedVideoTypes: string[] = ['video/mp4']
 
 const MUTATION_FAN_MAIL_SUBMISSION = gql`
-    mutation(
+    mutation MUTATION_FAN_MAIL_SUBMISSION(
         $title: String!
         $description: String!
         $video_url: String!
         $video_thumbnail_url: String!
         $influencer_id: ID!
-        $from_id: ID!
     ) {
-        createFanMailSubmission(
-            data: {
-                title: $title
-                description: $description
-                video_url: $video_url
-                video_thumbnail_url: $video_thumbnail_url
-                video_private: false
-                to: { connect: { id: $influencer_id } }
-                from: { connect: { id: $from_id } }
-            }
+        submitFanMail(
+            title: $title
+            description: $description
+            video_url: $video_url
+            video_thumbnail_url: $video_thumbnail_url
+            influencer_id: $influencer_id
         ) {
             id
+            title
+            description
+            video_url
+            video_private
+            video_thumbnail_url
+            influencer_watched
+            from {
+                id
+                name
+                avatar_url
+            }
+            to {
+                id
+                name
+                avatar_url
+            }
         }
     }
 
+`
+
+const QUERY_LAST_SUBMISSION_TIME = gql`
+    query {
+        lastSubmission
+    }
 `
 
 class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> {
@@ -72,9 +90,10 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
         loginModalOpen: false
     }
 
-    saveVideoAndInformation(values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) {
+    async saveVideoAndInformation(values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) {
+
         const videoID = uuid()
-        // 1. SAVE VIDEO TO FIREBASE
+        // 2. SAVE VIDEO TO FIREBASE
         videoStorageRef.child('videos/' + videoID)
             .put(this.state.video!)
             .then(async snapshot => {
@@ -84,24 +103,51 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                     video_url = url
                 }).catch(err => { })
 
-                // 2. SAVE FUN SUBMISSION INFO TO POSTGRES DB
+                // 3. SAVE FUN SUBMISSION INFO TO POSTGRES DB
                 const submission = await client.mutate({
-                    mutation: MUTATION_FAN_MAIL_SUBMISSION, variables: {
+                    mutation: MUTATION_FAN_MAIL_SUBMISSION,
+                    variables: {
                         title: values.title,
                         description: values.description,
                         video_url: video_url,
                         video_thumbnail_url: "random",
                         influencer_id: this.props.influencerID,
-                        from_id: "cjy2drw0v004g0977v9ftnv4f"
-                    }
+                    },
+                    update: (store: any, { data: { submitFanMail } }: any) => {
+                        /** 1. update mail array in influencer query  */
+
+                        // Read the data from our cache for this query.
+                        const data = store.readQuery({ query: QUERY_INFLUENCER_EVENTS_AND_MAIL, variables: { influencerID: this.props.influencerID } });
+
+
+                        // add the new elements
+                        data.influencer.mail.unshift({ ...submitFanMail });
+                        // we only want 3 showing
+                        data.influencer.mail.length = 3
+
+                        // Write our data back to the cache.
+                        store.writeQuery({ query: QUERY_INFLUENCER_EVENTS_AND_MAIL, variables: { influencerID: this.props.influencerID }, data });
+
+                        /** 2. update last submission query to prevent overposting */
+
+                        // Read the data from our cache for this query.
+                        let lastSubmissionData = store.readQuery({ query: QUERY_LAST_SUBMISSION_TIME });
+                        console.log("INFO", lastSubmissionData)
+                        console.log("1")
+                        // Set time to now
+                        lastSubmissionData.lastSubmission = moment().format()
+                        console.log("2")
+                        // Write our data back to the cache.
+                        store.writeQuery({ query: QUERY_LAST_SUBMISSION_TIME, data: { ...lastSubmissionData } })
+                    },
                 })
                     .then((info: any) => {
-                        // 3. Set submitting back to false after competition
+                        // 4. Set submitting back to false after competition
                         actions.setSubmitting(false)
                         this.props.history.push(`/in/${this.props.influencerID}`)
                     })
                     .catch((err: ErrorResponse) => {
-                        // 3. Set submitting back to false after competition
+                        // 4. Set submitting back to false after competition
                         actions.setError(err)
                         actions.setSubmitting(false)
                     })
@@ -139,6 +185,8 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                         let errors: FormikErrors<IFanMailFormValues> = {};
                                         if (!values.tos_accepted)
                                             errors.tos_accepted = "You must accept the Terms & Conditions and Privacy Policy to submit a video."
+
+
                                         // 1. CHECK VIDEO TITLE
                                         if (values.title.length < 2)
                                             errors.title = "Please enter a title at least 2 characters or longer."
@@ -152,7 +200,15 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
 
                                         return errors;
                                     }}
-                                    onSubmit={(values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) => {
+                                    onSubmit={async (values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) => {
+                                        // 1. CHECK LAST SUBMISSION TIME
+                                        const { data } = await client.query({ query: QUERY_LAST_SUBMISSION_TIME })
+
+                                        const now = moment(), lastSubmission = moment(data.lastSubmission).format(), difference = now.diff(lastSubmission, 'seconds')
+                                        if (difference < 60) {
+                                            actions.setSubmitting(false)
+                                            return this.setState({ errorMessage: `You must wait ${60 - difference} seconds before your next submission.` })
+                                        }
 
                                         // 2. CHECK VIDEO
                                         if (this.state.video) {
@@ -252,11 +308,20 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                                 </Form.Field>
 
                                                 <Form.Field>
+                                                    <label>Submission Rules - Submissions violating rules are automatically deleted</label>
+                                                    <Segment>
+                                                        <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+                                                            <li>No asking for things (e.g. add me, re-tweet me, etc.)</li>
+                                                            <li>Keep submission appropriate for all audiences</li>
+                                                        </ul>
+                                                    </Segment>
+                                                </Form.Field>
+                                                <Form.Field>
                                                     <Form.Checkbox
                                                         error={errors.tos_accepted && touched.tos_accepted && errors.tos_accepted}
                                                         name='tos_accepted'
                                                         type="checkbox"
-                                                        label="I agree to the Terms and Conditions & Privacy Policy."
+                                                        label="I agree to the Terms and Conditions, Privacy Policy and Submission Rules."
                                                         onChange={() => setFieldValue('tos_accepted', !values.tos_accepted)}
                                                         onBlur={handleBlur}
                                                         checked={values.tos_accepted}

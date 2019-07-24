@@ -1,7 +1,7 @@
 import React from 'react'
 
 const QueryError = () => (
-    <span>Oops.. that wasn't supposed to happen.. Please try reloading the page.</span>
+    <p>Oops.. that wasn't supposed to happen.. Please try reloading the page.</p>
 )
 
 export default QueryError

@@ -25,7 +25,6 @@ export default class FirebaseAuthProvider extends React.Component<FireAuthProvid
 
     componentDidMount() {
         Firebase.auth.onAuthStateChanged(user => {
-            console.log("AUTH CHANGESDDD", user)
             return this.setState({
                 authStatusReported: true,
                 isUserSignedIn: !!user

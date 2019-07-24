@@ -25,6 +25,22 @@ const MUTATION_CREATE_INFLUENCER = gql`
     }
 `
 
+const MUTATION_CREATE_SEARCH_INFLUENCER = gql`
+    mutation Q($name: String!, $influencerID: ID!) {
+        createSearchInfluencer(data:{ 
+            name: $name,
+            influencer: {
+                connect: {
+                    id: $influencerID
+                }
+            }
+        }) {
+            id
+        }
+    }
+`
+
+
 export default class CreateInfluencer extends React.Component<ICreateInfluencerProps> {
     render() {
         return (
@@ -37,7 +53,6 @@ export default class CreateInfluencer extends React.Component<ICreateInfluencerP
                         title: ''
                     }}
                     onSubmit={(values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) => {
-                        console.log("SUBMITTED")
                         client.mutate({
                             mutation: MUTATION_CREATE_INFLUENCER,
                             variables: {
@@ -45,13 +60,29 @@ export default class CreateInfluencer extends React.Component<ICreateInfluencerP
                                 avatar_url: values.avatar_url,
                                 title: values.title
                             }
-                        })
+                        }, `{ id }`)
                             .then((data: any) => {
-                                console.log(data)
-                                actions.setSubmitting(false)
-                                actions.resetForm()
+                                // AFTER ADDING, WE NEED TO ADD SEARCH TERM VERSION
+                                client.mutate({
+                                    mutation: MUTATION_CREATE_SEARCH_INFLUENCER,
+                                    variables: {
+                                        name: values.name.toLowerCase(),
+                                        influencerID: data.data.createInfluencer.id
+                                    }
+                                })
+                                    .then((data: any) => {
+                                        actions.setSubmitting(false)
+                                        actions.resetForm()
+                                    })
+                                    .catch((err: any) => {
+                                        actions.setSubmitting(false)
+                                        console.log(err)
+                                    })
                             })
-                            .catch((err: any) => console.log(err))
+                            .catch((err: any) => {
+                                actions.setSubmitting(false)
+                                console.log(err)
+                            })
                     }}
                 >
                     {({

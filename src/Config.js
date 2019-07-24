@@ -5,6 +5,7 @@ import Logout from './views/Auth/Logout';
 import CreateInfluencer from './components/admin/CreateInfluencer';
 import PrivacyPolicy from './views/TermsOfService/PrivacyPolicy';
 import TermsAndConditions from './views/TermsOfService/TermsAndConditions';
+import Chron from './components/Chron';
 
 export const COLOR_BACKGROUND_GREY = "#e6ecf0"
 export const PRIMARY_COLOR = "#F15642"
@@ -14,6 +15,10 @@ export const ROUTE_CONFIG = [
         path: '/',
         component: Home,
         exact: true
+    },
+    {
+        path: '/chron',
+        component: Chron
     },
     {
         path: '/in/:influencerID',
@@ -33,10 +38,10 @@ export const ROUTE_CONFIG = [
     },
     {
         path: '/tos',
-        component: TermsAndConditions 
+        component: TermsAndConditions
     },
     {
         path: '/privacy',
-        component: PrivacyPolicy 
+        component: PrivacyPolicy
     }
 ]

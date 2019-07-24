@@ -23,8 +23,6 @@ export interface IInfluencerRouteParamProps {
 
 class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInfluencerLandingState> {
     render() {
-        console.log("THIS>PROPS")
-        console.log(this.props)
         return (
             <Query
                 query={QUERY_INFLUENCER_EVENTS_AND_MAIL}
@@ -83,14 +81,14 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
     }
 }
 
-const QUERY_INFLUENCER_EVENTS_AND_MAIL = gql`
+export const QUERY_INFLUENCER_EVENTS_AND_MAIL = gql`
     query ($influencerID: ID!) {
         influencer(where: { id: $influencerID }) {
             id
             name
             title
             avatar_url
-            mail(first: 2) {
+            mail(first: 3, orderBy: createdAt_DESC) {
                 id
                 title
                 description
@@ -109,7 +107,7 @@ const QUERY_INFLUENCER_EVENTS_AND_MAIL = gql`
                     avatar_url
                 }
             }
-            events (first: 2) {
+            events (first: 3) {
                 id
                 date
                 title

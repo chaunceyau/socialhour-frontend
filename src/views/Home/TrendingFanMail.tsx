@@ -4,6 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
 import { PRIMARY_COLOR } from '../../Config';
+import QueryError from '../../components/QueryError';
 
 export interface ITrendingFanMailProps extends RouteComponentProps {
 }
@@ -38,9 +39,9 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                     }}
                 >
                     {({ loading, error, data, fetchMore }: { loading: any, error?: any, data: any, fetchMore: any }) => {
-               
+
                         if (error)
-                            return <span>Oops.. that wasn't supposed to happen. Please try reloading the page.</span>
+                            return <QueryError />
                         if (data) {
                             const { influencers } = data
                             if (!influencers) return <span></span>
@@ -86,7 +87,6 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                                                 },
                                                 updateQuery: (prev: any, { fetchMoreResult }: { fetchMoreResult: any }) => {
                                                     if (!fetchMoreResult) {
-                                                        console.log("NOMROE")
                                                         return prev;
                                                     }
                                                     if (fetchMoreResult.influencers.length === 0)

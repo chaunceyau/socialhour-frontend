@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { FirebaseAuthContext } from '../views/Auth/FirebaseAuthProvider';
 import { PRIMARY_COLOR } from '../Config';
 import NavigationLogo from '../assets/nav_logo.png'
+import InfluencerSearchBar from './InfluencerSearchBar';
 
 export interface INavigationProps {
 }
@@ -22,7 +23,7 @@ export default class Navigation extends React.Component<INavigationProps> {
                             </Link>
                         </Grid.Column>
                         <Grid.Column width={11} >
-                            <Search input={{ fluid: true, placeholder: 'Find your favorite influencer or event...' }} style={{ width: '70%', margin: '0 auto' }} />
+                            <InfluencerSearchBar />
                         </Grid.Column>
                         <Grid.Column width={2} textAlign='center'>
                             <FirebaseAuthContext.Consumer>
