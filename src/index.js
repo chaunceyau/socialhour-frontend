@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './index.css';
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
 import firebase from 'firebase'
+import 'semantic-ui-css/semantic.min.css'
 
 export const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
