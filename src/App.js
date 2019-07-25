@@ -1,16 +1,24 @@
 import React from 'react'
 import { Switch, Route } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Segment, Container, Header } from 'semantic-ui-react';
+import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
+// 
 import { Navigation } from './components'
 import { ROUTE_CONFIG, COLOR_BACKGROUND_GREY, PRIMARY_COLOR } from './Config'
 import FirebaseAuthProvider from './views/Auth/FirebaseAuthProvider';
-import { Segment, Container, Header } from 'semantic-ui-react';
 import Footer from './components/Footer';
 
 export default class App extends React.Component {
     render() {
         return (
-            <div style={{ backgroundColor: COLOR_BACKGROUND_GREY, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <AppWrapperDiv>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>SocialHour - Fan Mail & Live Events</title>
+                    {/* <link rel="canonical" href="http://mysite.com/example" /> */}
+                </Helmet>
                 <FirebaseAuthProvider>
                     <Router>
                         <Navigation />
@@ -33,7 +41,14 @@ export default class App extends React.Component {
                         <Footer />
                     </Router>
                 </FirebaseAuthProvider>
-            </div>
+            </AppWrapperDiv>
         )
     }
 }
+
+const AppWrapperDiv = styled.div`
+    background-color: ${COLOR_BACKGROUND_GREY}
+    display: flex
+    flex-direction: column
+    min-height: 100vh 
+`
