@@ -1,14 +1,14 @@
 import React from 'react'
-import { Switch, Route } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Segment, Container, Header } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 // 
 import { Navigation } from './components'
-import { ROUTE_CONFIG, COLOR_BACKGROUND_GREY, PRIMARY_COLOR } from './Config'
+import { COLOR_BACKGROUND_GREY, PRIMARY_COLOR } from './Config'
 import FirebaseAuthProvider from './views/Auth/FirebaseAuthProvider';
 import Footer from './components/Footer';
+import Routes from './Routes'
 
 export default class App extends React.Component {
     render() {
@@ -16,7 +16,8 @@ export default class App extends React.Component {
             <AppWrapperDiv>
                 <Helmet>
                     <meta charSet="utf-8" />
-                    <title>SocialHour - Fan Mail & Live Events</title>
+                    <title>SocialHour - Influencer Fanmail & Live Events</title>
+                    <meta name='description' content='Send fanmail videos to your favorite influencers on SocialHour. We also host live interactive fan engagement events such as meet and greets.' />
                     {/* <link rel="canonical" href="http://mysite.com/example" /> */}
                 </Helmet>
                 <FirebaseAuthProvider>
@@ -25,17 +26,11 @@ export default class App extends React.Component {
                         <Container style={{ paddingTop: '1rem', marginBottom: '2rem' }}>
                             <Segment attached='top' style={{ backgroundColor: PRIMARY_COLOR }}>
                                 <Header textAlign='center' style={{ color: 'white' }}>
-                                    Influencer Fan Mail & Live Events
+                                    <h1>Influencer Fanmail & Live Events</h1>
                                 </Header>
                             </Segment>
                             <Segment attached='bottom' style={{ padding: '1rem' }}>
-                                {/* <Header textAlign='center' style={{ color: PRIMARY_COLOR }}>Influencer Fan Mail & Live Events</Header> */}
-                                {/* <Label attached='top' content='Influencer Fan Mail & Live Events' style={{ color: 'white', backgroundColor: PRIMARY_COLOR }} /> */}
-                                <Switch>
-                                    {
-                                        ROUTE_CONFIG.map((route, index) => <Route key={index} {...route} />)
-                                    }
-                                </Switch>
+                                <Routes />
                             </Segment>
                         </Container>
                         <Footer />
