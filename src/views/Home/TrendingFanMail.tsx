@@ -30,7 +30,7 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
     render() {
         return (
             <Segment>
-                <Label attached='top' content='Trending Fan Inboxes' />
+                <Label attached='top' content='Trending Fanmail Inboxes' as='h2' />
                 <Query
                     query={QUERY_TRENDING_INFLUENCERS}
                     variables={{
