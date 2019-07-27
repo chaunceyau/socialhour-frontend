@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Segment, Container, Header } from 'semantic-ui-react';
-import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 // 
 import { Navigation } from './components'
@@ -14,12 +13,6 @@ export default class App extends React.Component {
     render() {
         return (
             <AppWrapperDiv>
-                <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>SocialHour - Influencer Fanmail & Live Events</title>
-                    <meta name='description' content='Send fanmail videos to your favorite influencers on SocialHour. We also host live interactive fan engagement events such as meet and greets.' />
-                    {/* <link rel="canonical" href="http://mysite.com/example" /> */}
-                </Helmet>
                 <FirebaseAuthProvider>
                     <Router>
                         <Navigation />
