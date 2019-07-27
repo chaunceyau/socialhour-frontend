@@ -8,7 +8,8 @@ import { Helmet } from 'react-helmet'
 import 'semantic-ui-css/semantic.min.css'
 
 export const client = new ApolloClient({
-  uri: process.env.NODE_ENV === 'production' ? 'http://backend.socialhour.tv/graphql' : 'http://localhost:4000/graphql',
+  // uri: process.env.NODE_ENV === 'production' ? 'http://backend.socialhour.tv/graphql' : 'http://localhost:4000/graphql',
+  uri: 'https://backend.socialhour.tv/graphql',
   request: async operation => {
     let token = null
     if (firebase.auth().currentUser)
