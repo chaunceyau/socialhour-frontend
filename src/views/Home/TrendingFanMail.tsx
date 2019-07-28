@@ -8,6 +8,7 @@ import QueryError from '../../components/QueryError';
 
 export interface ITrendingFanMailProps extends RouteComponentProps {
 }
+
 export interface ITrendingFanMailState {
     showNoMoreMessage: boolean
 }
@@ -30,7 +31,7 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
     render() {
         return (
             <Segment>
-                <Label attached='top' content='Trending Fanmail Inboxes' as='h2' />
+                <Label attached='top' content='Trending Fanmail Inboxes' as='h1' />
                 <Query
                     query={QUERY_TRENDING_INFLUENCERS}
                     variables={{
