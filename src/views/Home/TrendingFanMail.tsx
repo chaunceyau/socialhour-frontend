@@ -75,6 +75,7 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                                     }
                                     <Button
                                         fluid
+                                        loading={loading}
                                         content='Load More Influencers'
                                         inverted
                                         style={{ backgroundColor: PRIMARY_COLOR }}
