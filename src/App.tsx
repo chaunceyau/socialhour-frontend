@@ -19,7 +19,7 @@ export default class App extends React.Component {
                         <Container style={{ paddingTop: '1rem', marginBottom: '2rem' }}>
                             <Segment attached='top' style={{ backgroundColor: PRIMARY_COLOR }}>
                                 <Header textAlign='center' style={{ color: 'white' }}>
-                                    <h1>Influencer Fanmail & Live Events</h1>
+                                    <InfluencerHeader>Influencer Fanmail & Live Events</InfluencerHeader>
                                 </Header>
                             </Segment>
                             <Segment attached='bottom' style={{ padding: '1rem' }}>
@@ -39,4 +39,8 @@ const AppWrapperDiv = styled.div`
     display: flex
     flex-direction: column
     min-height: 100vh 
+`
+
+const InfluencerHeader = styled.h1`
+    font-size: 1.5rem
 `

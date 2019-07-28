@@ -8,7 +8,8 @@ import Logout from './views/Auth/Logout';
 import CreateInfluencer from './components/admin/CreateInfluencer';
 import PrivacyPolicy from './views/TermsOfService/PrivacyPolicy';
 import TermsAndConditions from './views/TermsOfService/TermsAndConditions';
-// import Chron from './components/Chron';
+import Chron from './components/Chron';
+import InfluencerNoID from './views/Influencer/InfluencerNoID';
 
 const ROUTE_CONFIG = [
     {
@@ -19,6 +20,14 @@ const ROUTE_CONFIG = [
     {
         path: '/in/:influencerID',
         component: InfluencerLanding,
+    },
+    {
+        path: '/in',
+        component: InfluencerNoID
+    },
+    {
+        path: '/chron',
+        component: Chron,
     },
     {
         path: '/auth/signin',
