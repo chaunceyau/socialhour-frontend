@@ -12,7 +12,7 @@ export const client = new ApolloClient({
   uri: process.env.BACKEND_URL,
   request: async operation => {
     let token = null
-    console.log(process.env.BACKEND_URL)
+    console.log(process.env.BACKEND_URL, process.env.NODE_ENV, "fldsam")
     if (firebase.auth().currentUser)
       token = await firebase.auth().currentUser.getIdToken().then(token => token)
     return operation.setContext({
