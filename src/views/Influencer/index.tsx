@@ -43,10 +43,13 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                                 <Helmet>
                                     <meta charSet="utf-8" />
                                     <title>SocialHour - {influencer.name} Fan Page</title>
-                                    <meta property="og:title" content={influencer.name} />
+                                    <meta property="og:title" content={`${influencer.name} Fanmail`} />
                                     <meta property="og:type" content="website" />
+                                    <meta property="og:image:width" content="400" />
+                                    <meta property="og:image:height" content="400" />
                                     <meta property="og:url" content={`https://socialhour.tv/in/${influencer.id}`} />
                                     <meta property="og:image" content={influencer.avatar_url} />
+                                    <meta property="og:description" content={`Send ${influencer.name} fanmail videos on SocialHour!`} />
                                     {/* <link rel="canonical" href="http://mysite.com/example" /> */}
                                 </Helmet>
 
