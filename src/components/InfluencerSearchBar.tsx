@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Query } from 'react-apollo';
-import { Search, SearchResultData, SearchProps, SearchResultProps } from 'semantic-ui-react';
+import { Search, SearchProps } from 'semantic-ui-react';
 import { gql } from 'apollo-boost'
 import { withRouter, RouteComponentProps } from 'react-router';
 import { client } from '..';

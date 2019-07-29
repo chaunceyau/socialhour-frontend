@@ -3,7 +3,7 @@ import { Form, Button, Card, Icon, Modal, Segment } from 'semantic-ui-react';
 import { Formik, FormikActions, FormikErrors } from 'formik'
 import { withRouter, RouteComponentProps } from 'react-router';
 import firebase from 'firebase'
-import { gql, StoreObject } from 'apollo-boost';
+import { gql } from 'apollo-boost';
 import uuid from 'uuid/v4';
 import moment from 'moment'
 // 
@@ -13,7 +13,6 @@ import { FirebaseAuthContext } from '../../views/Auth/FirebaseAuthProvider';
 import { ErrorResponse } from 'apollo-link-error';
 import SignIn from '../../views/Auth/SignIn';
 import { COLOR_BACKGROUND_GREY } from '../../Config';
-import { DataProxy } from 'apollo-cache';
 
 export interface IFanMailFormProps extends RouteComponentProps<IInfluencerRouteParamProps> {
     influencerID: string
@@ -172,7 +171,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                 () => this.props.history.push(`/in/${this.props.match.params.influencerID}`)
                             }
                         />
-                        <span>&nbsp; Fan Mail Form</span>
+                        <span>&nbsp; Fanmail Form</span>
                     </Card.Header>
                 </Card.Content>
                 <Card.Content>
@@ -250,7 +249,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                     }) => (
                                             <Form onSubmit={handleSubmit} loading={isSubmitting}>
                                                 <Modal
-                                                    header="Login to Send Fan Mail"
+                                                    header="Login to Send Fanmail"
                                                     content={
                                                         <div style={{ backgroundColor: COLOR_BACKGROUND_GREY }}>
                                                             <SignIn
@@ -334,7 +333,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                                     type="submit"
                                                     disabled={isSubmitting}
                                                 >
-                                                    Send Fan Mail
+                                                    Send Fanmail
                                                 </Button>
                                             </Form>
                                         )}

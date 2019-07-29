@@ -31,7 +31,7 @@ export default class UpcomingEvents extends React.Component<IUpcomingEventsProps
                         </Card.Group>
                         :
                         <Message>
-                            <span>Live events feature coming very soon. Leave your favorite influencer a <b>fan video below.</b></span>
+                            <p>Live events feature coming very soon. Leave your favorite influencer <b>video-based fanmail above.</b></p>
                         </Message>
                 }
             </Segment>

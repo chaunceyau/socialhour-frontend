@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { Segment, Label, Card, Image, Icon, Button, Message } from 'semantic-ui-react';
+import { Segment, Label, Card, Image, Icon, Button, Message, Popup } from 'semantic-ui-react';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
 import { PRIMARY_COLOR } from '../../Config';
 import QueryError from '../../components/QueryError';
+import { Link } from 'react-router-dom';
 
 export interface ITrendingFanMailProps extends RouteComponentProps {
 }
+
 export interface ITrendingFanMailState {
     showNoMoreMessage: boolean
 }
@@ -30,7 +32,7 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
     render() {
         return (
             <Segment>
-                <Label attached='top' content='Trending Fan Inboxes' />
+                <Label attached='top' content='Trending Fanmail Inboxes' as='h1' />
                 <Query
                     query={QUERY_TRENDING_INFLUENCERS}
                     variables={{
@@ -55,16 +57,30 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                                                     style={{ marginTop: 0 }}
                                                     onClick={() => this.props.history.push('/in/' + influencer.id)}
                                                 >
-                                                    <Image src={influencer.avatar_url} />
+                                                    {/* Avatar picture cards */}
+                                                    <Image src={influencer.avatar_url} alt={influencer.name} />
+
+                                                    {/* Name, etc. */}
                                                     <Card.Content>
-                                                        <Card.Header>{influencer.name}</Card.Header>
-                                                        <Card.Meta>{influencer.title}</Card.Meta>
+                                                        <Card.Header>
+                                                            <Popup
+                                                                trigger={
+                                                                    <Icon name='check circle' color='blue' />
+                                                                }
+                                                                content='Verified Influencer'
+                                                            />
+                                                            <span>{influencer.name}</span>
+                                                        </Card.Header>
+                                                        <Card.Meta>
+                                                            <p>{influencer.title}</p>
+                                                        </Card.Meta>
                                                     </Card.Content>
                                                     <Card.Content as={Button}>
                                                         <Icon name='envelope' />
-                                                        <span>Submit Fan Mail</span>
+                                                        <span>Submit Fanmail</span>
                                                     </Card.Content>
                                                 </Card>
+
                                             ))
                                         }
                                     </Card.Group>
@@ -75,6 +91,7 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                                     }
                                     <Button
                                         fluid
+                                        loading={loading}
                                         content='Load More Influencers'
                                         inverted
                                         style={{ backgroundColor: PRIMARY_COLOR }}

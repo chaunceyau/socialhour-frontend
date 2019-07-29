@@ -1,41 +1,33 @@
 import React from 'react'
-import { Switch, Route } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Segment, Container, Header } from 'semantic-ui-react';
-import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 // 
 import { Navigation } from './components'
-import { ROUTE_CONFIG, COLOR_BACKGROUND_GREY, PRIMARY_COLOR } from './Config'
+import { COLOR_BACKGROUND_GREY, PRIMARY_COLOR } from './Config'
 import FirebaseAuthProvider from './views/Auth/FirebaseAuthProvider';
 import Footer from './components/Footer';
+import Routes from './Routes'
 
 export default class App extends React.Component {
     render() {
         return (
             <AppWrapperDiv>
-                <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>SocialHour - Fan Mail & Live Events</title>
-                    {/* <link rel="canonical" href="http://mysite.com/example" /> */}
-                </Helmet>
                 <FirebaseAuthProvider>
                     <Router>
                         <Navigation />
                         <Container style={{ paddingTop: '1rem', marginBottom: '2rem' }}>
                             <Segment attached='top' style={{ backgroundColor: PRIMARY_COLOR }}>
                                 <Header textAlign='center' style={{ color: 'white' }}>
-                                    Influencer Fan Mail & Live Events
+                                    <InfluencerHeader>Influencer Fanmail & Live Events</InfluencerHeader>
                                 </Header>
                             </Segment>
                             <Segment attached='bottom' style={{ padding: '1rem' }}>
-                                {/* <Header textAlign='center' style={{ color: PRIMARY_COLOR }}>Influencer Fan Mail & Live Events</Header> */}
-                                {/* <Label attached='top' content='Influencer Fan Mail & Live Events' style={{ color: 'white', backgroundColor: PRIMARY_COLOR }} /> */}
-                                <Switch>
-                                    {
-                                        ROUTE_CONFIG.map((route, index) => <Route key={index} {...route} />)
-                                    }
-                                </Switch>
+                                <Routes />
+                            </Segment>
+                            <Segment>
+                                <p>SocialHour is a platform for fan engagement. Fans can submit short video-based fanmail to their favorite influencers. We work with influencers to schedule live events to watch and repsond to their fanmail, as well as many other event types including online meet and greets. Record a short piece of fanmail and send it to your favorite influencers. More features coming very soon so stay informed!</p>
+                                <p>If you are an influencer looking to access your fanmail submissions, shoot us an email at contact@socialhour.tv or fill out our form coming very shortly.</p>
                             </Segment>
                         </Container>
                         <Footer />
@@ -51,4 +43,8 @@ const AppWrapperDiv = styled.div`
     display: flex
     flex-direction: column
     min-height: 100vh 
+`
+
+const InfluencerHeader = styled.h1`
+    font-size: 1.5rem
 `

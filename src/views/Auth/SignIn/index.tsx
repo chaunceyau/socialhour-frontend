@@ -8,16 +8,12 @@ import { Container, Grid, Segment, Image } from 'semantic-ui-react'
 import StackedLogo from '../../../assets/logostacked.png'
 import { client } from '../../..'
 import { gql } from 'apollo-boost'
+import { FirebaseAuthContext } from '../FirebaseAuthProvider';
 
 interface ISignInScreenProps extends RouteComponentProps {
     afterSignIn?: () => void
 }
 class SignInScreen extends React.Component<ISignInScreenProps> {
-    unregisterAuthObserver: any
-    // The component's Local state.
-    state = {
-        isSignedIn: false // Local signed-in state.
-    };
 
     // Configure FirebaseUI.
     uiConfig = {
@@ -29,7 +25,8 @@ class SignInScreen extends React.Component<ISignInScreenProps> {
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         ],
-        tosUrl: 'https://www.termsandcondiitionssample.com/live.php?token=C60AnPGmFF4CA9EAIIFr53h698v2GRBa',
+        tosUrl: 'https://socialhour.tv/tos',
+        privacyPolicyUrl: 'https://socialhour.tv/privacy',
         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
         callbacks: {
             signInSuccessWithAuthResult: (authResult: any) => {
@@ -61,49 +58,35 @@ class SignInScreen extends React.Component<ISignInScreenProps> {
 
     };
 
-    // Listen to the Firebase Auth state and set the local state.
-    componentDidMount() {
-        this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-            (user) => {
-                if (user) {
-                    if (this.props.location.pathname === '/auth/signin')
-                        this.props.history.push('/')
-                }
-            }
-        );
-    }
-
-    // Make sure we un-register Firebase observers when the component unmounts.
-    componentWillUnmount() {
-        this.unregisterAuthObserver();
-    }
-
     render() {
-        if (!this.state.isSignedIn) {
-            return (
-                <Container textAlign='center'>
-                    <br />
-                    <Grid doubling stackable centered>
-                        <Grid.Row>
-                            <Grid.Column width={6} style={{ minWidth: 350 }}>
-                                <Segment>
-                                    <Image centered size="small" src={StackedLogo} />
-                                    <br />
-                                    <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
-                                </Segment>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-                    <br />
-                </Container >
-            );
-        }
         return (
-            <div>
-                <h1>My App</h1>
-                {/* <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p> */}
-                <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
-            </div>
+            <FirebaseAuthContext.Consumer>
+                {({ isUserSignedIn }) => {
+                    if (isUserSignedIn) {
+                        if (this.props.location.pathname === '/auth/signin')
+                            this.props.history.push('/')
+                    }
+
+                    return (
+                        <Container textAlign='center'>
+                            <br />
+                            <Grid doubling stackable centered>
+                                <Grid.Row>
+                                    <Grid.Column width={6} style={{ minWidth: 350 }}>
+                                        <Segment>
+                                            <Image centered size="small" src={StackedLogo} />
+                                            <br />
+                                            <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+                                        </Segment>
+                                    </Grid.Column>
+                                </Grid.Row>
+                            </Grid>
+                            <br />
+                        </Container >
+                    )
+                }}
+            </FirebaseAuthContext.Consumer>
+
         );
     }
 }
