@@ -9,7 +9,7 @@ import 'semantic-ui-css/semantic.min.css'
 
 export const client = new ApolloClient({
   // uri: process.env.NODE_ENV === 'production' ? 'http://backend.socialhour.tv/graphql' : 'http://localhost:4000/graphql',
-  uri: process.env.BACKEND_URL,
+  uri: process.env.REACT_APP_BACKEND_URL,
   request: async operation => {
     let token = null
     console.log(process.env.BACKEND_URL, process.env.NODE_ENV, "fldsam")
