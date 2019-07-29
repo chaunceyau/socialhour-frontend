@@ -26,7 +26,15 @@
 # inherit these settings.
 [context.deploy-preview]
   command = "npm run build"
-  environment = { REACT_APP_BACKEND_URL = "https://backend.socialhour.tv/graphql", NODE_ENV = "production"  }
+  environment = { REACT_APP_BACKEND_URL = "https://backend5.socialhour.tv/graphql", NODE_ENV = "production"  }
+
+[context.production.deploy-preview]
+  command = "npm run build"
+  environment = { REACT_APP_BACKEND_URL = "https://backend4.socialhour.tv/graphql", NODE_ENV = "production"  }
+
+[context.deploy-preview.production]
+  command = "npm run build"
+  environment = { REACT_APP_BACKEND_URL = "https://backend6.socialhour.tv/graphql", NODE_ENV = "production"  }
 
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
@@ -38,7 +46,12 @@
 [context.staging.deploy-preview] # 'staging' is a branch name
   command = "npm run build"
   base = "staging"
-  environment = { REACT_APP_BACKEND_URL = "https://backend4.socialhour.tv/graphql", NODE_ENV = "staging"  }
+  environment = { REACT_APP_BACKEND_URL = "https://backend3.socialhour.tv/graphql", NODE_ENV = "staging"  }
+
+[context.deploy-preview.staging] # 'staging' is a branch name
+  command = "npm run build"
+  base = "staging"
+  environment = { REACT_APP_BACKEND_URL = "https://backend0.socialhour.tv/graphql", NODE_ENV = "staging"  }
 
 # Branch Deploy context: all deploys that are not from a pull/merge request or 
 # from the Production branch will inherit these settings.
