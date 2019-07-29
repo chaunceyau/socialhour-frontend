@@ -100,10 +100,10 @@ const MUTATION_CREATE_NEW_USER = gql`
     ) {
         createUser (
             data: {
-            name: $name
-            email: $email
-            avatar_url: $avatar_url
-            firebase_id: $firebase_id
+                name: $name
+                email: $email
+                avatar_url: $avatar_url
+                firebase_id: $firebase_id
             }
         ) {
             id
