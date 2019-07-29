@@ -12,7 +12,7 @@ export default class FanMailInbox extends React.Component<IFanMailInboxProps> {
         return (
             <Container>
                 <Segment>
-                    <Label attached='top' content='Fan Mail Inbox' />
+                    <Label attached='top' content='Fanmail Inbox' />
                     <Table celled striped>
                         <Table.Header>
                             <Table.Row>

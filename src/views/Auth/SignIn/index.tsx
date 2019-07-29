@@ -25,8 +25,8 @@ class SignInScreen extends React.Component<ISignInScreenProps> {
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         ],
-        tosUrl: 'https://www.termsandcondiitionssample.com/live.php?token=C60AnPGmFF4CA9EAIIFr53h698v2GRBa',
-        privacyPolicyUrl: 'https://www.privacypolicygenerator.info/live.php?token=XBzhaTnqT5hBqaDbNJKHZ6I4OJOzelbd',
+        tosUrl: 'https://socialhour.tv/tos',
+        privacyPolicyUrl: 'https://socialhour.tv/privacy',
         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
         callbacks: {
             signInSuccessWithAuthResult: (authResult: any) => {

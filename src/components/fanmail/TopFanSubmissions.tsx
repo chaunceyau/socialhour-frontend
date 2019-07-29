@@ -40,7 +40,7 @@ class TopFanSubmissions extends React.Component<ITopFanSubmissionsProps> {
                         </Card.Group>
                         :
                         <Message
-                            content="This user doesn't have any fan mail. Be the first to leave them a video!"
+                            content="This user doesn't have any fanmail. Be the first to leave them a video!"
                         />
                 }
                 {
@@ -48,7 +48,7 @@ class TopFanSubmissions extends React.Component<ITopFanSubmissionsProps> {
                 }
                 <Button
                     fluid
-                    content='Submit Fan Mail'
+                    content='Submit Fanmail'
                     style={{ color: 'white', backgroundColor: PRIMARY_COLOR }}
                     onClick={() => this.props.history.push(`/in/${this.props.influencerID}/send`)}
                 />
