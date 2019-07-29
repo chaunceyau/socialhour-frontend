@@ -26,30 +26,8 @@
 # inherit these settings.
 [context.deploy-preview]
   command = "npm run build"
-  environment = { REACT_APP_BACKEND_URL = "https://backend1.socialhour.tv/graphql", NODE_ENV = "production"  }
-
-[context.production.deploy-preview]
-  command = "npm run build"
-  environment = { REACT_APP_BACKEND_URL = "https://backend2.socialhour.tv/graphql", NODE_ENV = "production"  }
-
-[context.deploy-preview.production]
-  command = "npm run build"
-  environment = { REACT_APP_BACKEND_URL = "https://backend3.socialhour.tv/graphql", NODE_ENV = "production"  }
-
-# Specific branch context: all deploys from this specific branch will inherit
-# these settings.
-# [context.staging] # 'staging' is a branch name
-#   command = "npm run build"
-#   base = "staging"
-#   environment = { REACT_APP_BACKEND_URL = "https://backend2.socialhour.tv/graphql", NODE_ENV = "staging"  }
-
-# Branch Deploy context: all deploys that are not from a pull/merge request or 
-# from the Production branch will inherit these settings.
-# [context.branch-deploy]
-#   command = "echo branch"
-# [context.branch-deploy.environment]
-#   NODE_ENV = "development"
-#   BACKEND_URL = 'test 2323'
+  # USE THIS FOR STAGING/TESTING ENV IN FUTURE
+  environment = { REACT_APP_BACKEND_URL = "https://backend.socialhour.tv/graphql", NODE_ENV = "production"  }
 
 # Redirects and headers are GLOBAL for all builds – they do not get scoped to 
 # contexts no matter where you define them in the file.
