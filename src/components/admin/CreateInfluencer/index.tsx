@@ -15,11 +15,7 @@ interface IFanMailFormValues {
 
 const MUTATION_CREATE_INFLUENCER = gql`
     mutation ($name: String!, $avatar_url: String!, $title: String!) {
-        createInfluencer(data:{
-            name: $name
-            avatar_url: $avatar_url
-            title: $title
-        }) {
+        createInfluencer(name: $name, avatar_url: $avatar_url, title: $title) {
             id
         }
     }
