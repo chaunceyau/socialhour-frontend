@@ -35,6 +35,11 @@
   base = "staging"
   environment = { REACT_APP_BACKEND_URL = "https://backend2.socialhour.tv/graphql", NODE_ENV = "staging"  }
 
+[context.staging.deploy-preview] # 'staging' is a branch name
+  command = "npm run build"
+  base = "staging"
+  environment = { REACT_APP_BACKEND_URL = "https://backend4.socialhour.tv/graphql", NODE_ENV = "staging"  }
+
 # Branch Deploy context: all deploys that are not from a pull/merge request or 
 # from the Production branch will inherit these settings.
 # [context.branch-deploy]
