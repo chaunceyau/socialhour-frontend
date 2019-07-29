@@ -25,6 +25,10 @@ export default class App extends React.Component {
                             <Segment attached='bottom' style={{ padding: '1rem' }}>
                                 <Routes />
                             </Segment>
+                            <Segment>
+                                <p>SocialHour is a platform for fan engagement. Fans can submit short video-based fanmail to their favorite influencers. We work with influencers to schedule live events to watch and repsond to their fanmail, as well as many other event types including online meet and greets. Record a short piece of fanmail and send it to your favorite influencers. More features coming very soon so stay informed!</p>
+                                <p>If you are an influencer looking to access your fanmail submissions, shoot us an email at contact@socialhour.tv or fill out our form coming very shortly.</p>
+                            </Segment>
                         </Container>
                         <Footer />
                     </Router>

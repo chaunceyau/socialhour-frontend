@@ -171,7 +171,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                 () => this.props.history.push(`/in/${this.props.match.params.influencerID}`)
                             }
                         />
-                        <span>&nbsp; Fan Mail Form</span>
+                        <span>&nbsp; Fanmail Form</span>
                     </Card.Header>
                 </Card.Content>
                 <Card.Content>
@@ -249,7 +249,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                     }) => (
                                             <Form onSubmit={handleSubmit} loading={isSubmitting}>
                                                 <Modal
-                                                    header="Login to Send Fan Mail"
+                                                    header="Login to Send Fanmail"
                                                     content={
                                                         <div style={{ backgroundColor: COLOR_BACKGROUND_GREY }}>
                                                             <SignIn
@@ -333,7 +333,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                                     type="submit"
                                                     disabled={isSubmitting}
                                                 >
-                                                    Send Fan Mail
+                                                    Send Fanmail
                                                 </Button>
                                             </Form>
                                         )}

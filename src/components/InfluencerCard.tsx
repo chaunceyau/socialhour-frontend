@@ -23,7 +23,7 @@ class InfluencerCard extends React.Component<IInfluencerCardProps> {
                     </Card.Content>
                     <Card.Content as={Button}>
                         <Icon name='envelope' />
-                        <span>Submit Fan Mail</span>
+                        <span>Submit Fanmail</span>
                     </Card.Content>
                 </Card>
             )
@@ -45,7 +45,7 @@ class InfluencerCard extends React.Component<IInfluencerCardProps> {
                 </Card.Content>
                 <Card.Content>
                     <span>
-                        more info coming soon
+                        Bio coming soon...
                     </span>
                 </Card.Content>
             </Card>
