@@ -43,10 +43,11 @@ export default class CreateInfluencer extends React.Component<ICreateInfluencerP
                         }, `{ id }`)
                             .then((data: any) => {
                                 console.log(data)
+                                actions.setSubmitting(false)
                             })
                             .catch((err: any) => {
-                                actions.setSubmitting(false)
                                 console.log(err)
+                                actions.setSubmitting(false)
                             })
                     }}
                 >
