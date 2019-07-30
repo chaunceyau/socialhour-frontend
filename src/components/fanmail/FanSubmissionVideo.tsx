@@ -4,12 +4,12 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
 
-export interface IFanSubmissionProps extends RouteComponentProps<{ videoID: string }> {
+export interface IFanSubmissionVideoProps extends RouteComponentProps<{ videoID: string }> {
     influencerID: string
 }
 
 
-class FanSubmission extends React.Component<IFanSubmissionProps> {
+class FanSubmissionVideo extends React.Component<IFanSubmissionVideoProps> {
   
     render() {
         if (!this.props.match.params.videoID)
@@ -66,4 +66,4 @@ const QUERY_FAN_MAILSUBMISSION_INFORMATION = gql`
     }
 `
 
-export default withRouter(FanSubmission)
+export default withRouter(FanSubmissionVideo)
