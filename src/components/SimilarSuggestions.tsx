@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Segment, Label, Card } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
-import CardsLoading from './CardsLoading';
 import QueryError from './QueryError';
 import { InfluencerCard } from '.';
+import { LoadInfluencerCard } from './LoadInfluencerCard';
 
 export interface ISimilarSuggestionsProps {
     influencerID: string
@@ -19,7 +19,11 @@ export default class SimilarSuggestions extends React.Component<ISimilarSuggesti
                     {({ loading, error, data }: { loading: any, error?: any, data: any }) => {
                         // LOADING
                         if (loading)
-                            return <CardsLoading />
+                            return (
+                                <Card.Group itemsPerRow={5}>
+                                    {[...Array(5)].map((value, index) => <LoadInfluencerCard key={index} />)}
+                                </Card.Group>
+                            )
                         // ERROR
                         if (error)
                             return <QueryError />
@@ -30,7 +34,7 @@ export default class SimilarSuggestions extends React.Component<ISimilarSuggesti
                                 <Card.Group itemsPerRow={5}>
                                     {
                                         influencers.map(({ id, name, title, avatar_url }: any) => (
-                                            <InfluencerCard key={id} id={id} name={name} title={title} avatar_url={avatar_url} fanMail />
+                                            <InfluencerCard key={id} id={id} name={name} title={title} avatar_url={avatar_url} />
                                         ))
                                     }
                                 </Card.Group>

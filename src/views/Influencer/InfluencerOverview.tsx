@@ -5,18 +5,15 @@ import { IFanMail, IEvent } from '../../Interfaces';
 export interface IInfluencerOverviewProps {
     upcomingEvents: IEvent[],
     fanSubmissions: IFanMail[],
-    influencerID: string
+    influencerID: string,
+    loading: boolean
 }
 
-class InfluencerOverview extends React.Component<IInfluencerOverviewProps> {
-    render() {
-        return (
-            <React.Fragment>
-                <TopFanSubmissions fanSubmissions={this.props.fanSubmissions} influencerID={this.props.influencerID} />
-                <InfluencerEvents upcomingEvents={this.props.upcomingEvents} />
-            </React.Fragment>
-        )
-    }
-}
+const InfluencerOverview: React.FC<IInfluencerOverviewProps> = (props:IInfluencerOverviewProps) => (
+    <React.Fragment>
+        <TopFanSubmissions loading={props.loading} fanSubmissions={props.fanSubmissions} influencerID={props.influencerID} />
+        <InfluencerEvents loading={props.loading} upcomingEvents={props.upcomingEvents} />
+    </React.Fragment>
+)
 
 export default InfluencerOverview

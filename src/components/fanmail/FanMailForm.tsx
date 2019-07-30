@@ -202,14 +202,15 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                                     onSubmit={async (values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) => {
                                         // 1. CHECK LAST SUBMISSION TIME
                                         const { data } = await client.query({ query: QUERY_LAST_SUBMISSION_TIME })
-
-                                        const now = moment(), lastSubmission = moment(data.lastSubmission).format(), difference = now.diff(lastSubmission, 'seconds')
-                                        if (difference < 60) {
-                                            // TODO: what if lastSubmission is null?
-                                            actions.setSubmitting(false)
-                                            return this.setState({ errorMessage: `You must wait ${60 - difference} seconds before your next submission.` })
+                                        // if null.. user hasn't made a submission so no need to check difference in time
+                                        if (data.lastSubmission !== null) {
+                                            const now = moment(), lastSubmission = moment(data.lastSubmission).format(), difference = now.diff(lastSubmission, 'seconds')
+                                            if (difference < 60) {
+                                                // TODO: what if lastSubmission is null?
+                                                actions.setSubmitting(false)
+                                                return this.setState({ errorMessage: `You must wait ${60 - difference} seconds before your next submission.` })
+                                            }
                                         }
-
                                         // 2. CHECK VIDEO
                                         if (this.state.video) {
                                             const { type, size } = this.state.video!

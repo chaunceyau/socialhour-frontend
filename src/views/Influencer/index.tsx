@@ -5,11 +5,15 @@ import { Query } from 'react-apollo'
 import { gql } from "apollo-boost"
 import { Helmet } from 'react-helmet'
 //
-import FanSubmission from '../../components/fanmail/FanSubmission';
-import SimilarSuggestions from '../../components/SimilarSuggestions';
-import { InfluencerCard } from '../../components';
-import { EventRegistration, EventInformation, FanMailForm } from '../../components';
+import {
+    InfluencerPageLoading, FanSubmissionVideo,
+    EventRegistration, SimilarSuggestions, EventInformation,
+    FanMailForm
+} from '../../components';
+
 import InfluencerOverview from './InfluencerOverview';
+import InfluencerProfile from '../../components/InfluencerProfile';
+import { LoadInfluencerProfile } from '../../components/LoadInfluencerProfile';
 
 export interface IInfluencerLandingProps extends RouteComponentProps<IInfluencerRouteParamProps> {
     routes: RouteComponentProps[]
@@ -32,36 +36,42 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                 variables={{ influencerID: this.props.match.params.influencerID }}
             >
                 {({ loading, error, data }: { loading: any, error?: any, data: any }) => {
-                    if (loading)
-                        return <span>loading</span>
+
                     if (error)
                         return <span>error</span>
                     if (data) {
                         const { influencer } = data
                         return (
                             <React.Fragment>
-                                <Helmet>
-                                    <meta charSet="utf-8" />
-                                    <title>SocialHour - {influencer.name} Fan Page</title>
-                                    <meta property="og:title" content={`${influencer.name} Fanmail`} />
-                                    <meta property="og:type" content="website" />
-                                    <meta property="og:image:width" content="400" />
-                                    <meta property="og:image:height" content="400" />
-                                    <meta property="og:url" content={`https://socialhour.tv/in/${influencer.id}`} />
-                                    <meta property="og:image" content={influencer.avatar_url} />
-                                    <meta property="og:description" content={`Send ${influencer.name} fanmail videos on SocialHour!`} />
-                                    {/* <link rel="canonical" href="http://mysite.com/example" /> */}
-                                </Helmet>
+                                {
+                                    !loading &&
+                                    <Helmet>
+                                        <meta charSet="utf-8" />
+                                        <title>SocialHour - {influencer.name} Fan Page</title>
+                                        <meta property="og:title" content={`${influencer.name} Fanmail`} />
+                                        <meta property="og:type" content="website" />
+                                        <meta property="og:image:width" content="400" />
+                                        <meta property="og:image:height" content="400" />
+                                        <meta property="og:url" content={`https://socialhour.tv/in/${influencer.id}`} />
+                                        <meta property="og:image" content={influencer.avatar_url} />
+                                        <meta property="og:description" content={`Send ${influencer.name} fanmail videos on SocialHour!`} />
+                                    </Helmet>
+                                }
 
                                 <Grid style={{ paddingTop: '1rem' }} stackable>
                                     <Grid.Row columns={2}>
                                         <Grid.Column width={5}>
-                                            <InfluencerCard
-                                                id={influencer.id}
-                                                name={influencer.name}
-                                                avatar_url={influencer.avatar_url}
-                                                title={influencer.title}
-                                            />
+                                            {
+                                                loading ?
+                                                    <LoadInfluencerProfile />
+                                                    :
+                                                    <InfluencerProfile
+                                                        id={this.props.match.params.influencerID}
+                                                        name={influencer && influencer.name}
+                                                        avatar_url={influencer && influencer.avatar_url}
+                                                        title={influencer && influencer.title}
+                                                    />
+                                            }
                                         </Grid.Column>
                                         <Grid.Column width={11}>
                                             <Route
@@ -71,22 +81,46 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                                                     props => (
                                                         <InfluencerOverview
                                                             {...props}
-                                                            influencerID={influencer.id}
-                                                            upcomingEvents={influencer.events}
-                                                            fanSubmissions={influencer.mail}
+                                                            loading={loading}
+                                                            influencerID={this.props.match.params.influencerID}
+                                                            upcomingEvents={influencer && influencer.events}
+                                                            fanSubmissions={influencer && influencer.mail}
                                                         />
                                                     )
                                                 }
                                             />
-                                            <Route exact path='/in/:influencerID/send' render={props => <FanMailForm {...props} influencerID={influencer.id} />} />
-                                            <Route exact path='/in/:influencerID/submission/:videoID' render={props => <FanSubmission {...props} influencerID={influencer.id} />} />
-                                            <Route exact path='/in/:influencerID/event/:eventID' component={EventInformation} />
-                                            <Route exact path='/in/:influencerID/event/:eventID/register' component={EventRegistration} />
+                                            <Route
+                                                exact
+                                                path='/in/:influencerID/send'
+                                                render={props => <FanMailForm {...props}
+                                                    influencerID={this.props.match.params.influencerID}
+                                                />}
+                                            />
+                                            <Route
+                                                exact
+                                                path='/in/:influencerID/submission/:videoID'
+                                                render={props =>
+                                                    <FanSubmissionVideo
+                                                        {...props}
+                                                        influencerID={this.props.match.params.influencerID}
+                                                    />
+                                                }
+                                            />
+                                            {/* <Route
+                                                exact
+                                                path='/in/:influencerID/event/:eventID'
+                                                component={EventInformation}
+                                            />
+                                            <Route
+                                                exact
+                                                path='/in/:influencerID/event/:eventID/register'
+                                                component={EventRegistration}
+                                            /> */}
                                         </Grid.Column>
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Column>
-                                            <SimilarSuggestions influencerID={influencer.id} />
+                                            <SimilarSuggestions influencerID={influencer ? influencer.id : "none"} />
                                         </Grid.Column>
                                     </Grid.Row>
                                 </Grid>

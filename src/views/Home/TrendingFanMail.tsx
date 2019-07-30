@@ -6,6 +6,8 @@ import { gql } from 'apollo-boost'
 import { PRIMARY_COLOR } from '../../Config';
 import QueryError from '../../components/QueryError';
 import { Link } from 'react-router-dom';
+import { LoadInfluencerProfile } from '../../components/LoadInfluencerProfile';
+import { LoadInfluencerCard } from '../../components/LoadInfluencerCard';
 
 export interface ITrendingFanMailProps extends RouteComponentProps {
 }
@@ -41,7 +43,12 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                     }}
                 >
                     {({ loading, error, data, fetchMore }: { loading: any, error?: any, data: any, fetchMore: any }) => {
-
+                        if (loading)
+                            return (
+                                <Card.Group stackable itemsPerRow={5}>
+                                    {[...Array(10)].map((value, index) => <LoadInfluencerCard key={index} />)}
+                                </Card.Group>
+                            )
                         if (error)
                             return <QueryError />
                         if (data) {
