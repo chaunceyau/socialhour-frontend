@@ -1,21 +1,21 @@
 export interface IUser {
-    id: string,
-    name: string,
-    avatar_url: string,
+    id: string
+    name: string
+    avatar_url: string
     title: string
 }
 
 export interface IInfluencer {
-    id: string,
-    name: string,
-    avatar_url: string,
+    id: string
+    name: string
+    avatar_url: string
     title: string
 }
 
 export interface IEvent {
-    id: string,
-    date: string,
-    user: IUser,
+    id: string
+    date: string
+    user: IUser
     charity: ICharity
 }
 
@@ -32,7 +32,7 @@ export interface IFanMail {
 }
 
 export interface ICharity {
-    id: string,
-    title: string,
+    id: string
+    title: string
     avatar_url: string
 }
