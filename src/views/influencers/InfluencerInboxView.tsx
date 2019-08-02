@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Segment, Label, Table, Icon, Checkbox, Image, Popup, Container } from 'semantic-ui-react';
 
-export interface IFanMailInboxProps {
+export interface IInfluencerInboxViewProps {
 }
 
 /**
  * Administrative side of viewing mail from fans
  */
-export default class FanMailInbox extends React.Component<IFanMailInboxProps> {
+export default class InfluencerInboxView extends React.Component<IInfluencerInboxViewProps> {
     render() {
         return (
             <Container>

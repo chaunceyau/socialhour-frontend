@@ -6,7 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 export interface IInfluencerProfileProps extends IUser, RouteComponentProps {
 }
 
-export const InfluencerProfile: React.FC<IInfluencerProfileProps> = (props) => (
+const InfluencerProfile: React.FC<IInfluencerProfileProps> = (props: IInfluencerProfileProps) => (
     <Card fluid>
         <Image src={props.avatar_url} />
         <Card.Content>
@@ -25,7 +25,7 @@ export const InfluencerProfile: React.FC<IInfluencerProfileProps> = (props) => (
         <Card.Content>
             <span>
                 Bio coming soon...
-                    </span>
+            </span>
         </Card.Content>
     </Card>
 );

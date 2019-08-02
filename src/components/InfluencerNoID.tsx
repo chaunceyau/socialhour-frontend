@@ -1,5 +1,5 @@
 import * as React from 'react';
-import SimilarSuggestions from '../../components/SimilarSuggestions';
+import { SimilarSuggestions } from './';
 
 export interface IInfluencerNoIDProps {
 }

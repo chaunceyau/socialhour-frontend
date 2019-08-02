@@ -1,16 +1,15 @@
 import React from 'react'
 import { Switch, Route } from 'react-router';
 
-import Home from './views/Home';
-import InfluencerLanding from './views/Influencer';
-import SignInScreen from './views/Auth/SignIn';
-import Logout from './views/Auth/Logout';
+import Home from './views/all/Home';
+import InfluencerLandingView from './views/fans/InfluencerLandingView';
+import SignInScreen from './views/all/Auth/SignIn';
+import Logout from './views/all/Auth/Logout';
 import CreateInfluencer from './components/admin/CreateInfluencer';
-import PrivacyPolicy from './views/TermsOfService/PrivacyPolicy';
-import TermsAndConditions from './views/TermsOfService/TermsAndConditions';
-import Chron from './components/Chron';
-import InfluencerNoID from './views/Influencer/InfluencerNoID';
-import InfluencerDashboardView from './views/InfluencerDashboard';
+import PrivacyPolicy from './views/all/Legal/PrivacyPolicy';
+import TermsAndConditions from './views/all/Legal/TermsAndConditions';
+import InfluencerNoID from './components/InfluencerNoID';
+import InfluencerDashboardView from './views/influencers/InfluencerDashboardView';
 
 const ROUTE_CONFIG = [
     {
@@ -21,7 +20,7 @@ const ROUTE_CONFIG = [
     // influencer 
     {
         path: '/in/:influencerID',
-        component: InfluencerLanding,
+        component: InfluencerLandingView,
     },
     {
         path: '/in',
@@ -42,10 +41,6 @@ const ROUTE_CONFIG = [
         component: InfluencerDashboardView
     },
     // 
-    {
-        path: '/chron',
-        component: Chron,
-    },
     {
         path: '/create-in',
         component: CreateInfluencer

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { TopFanSubmissions, InfluencerEvents } from '../../components'
-import { IFanMail, IEvent } from '../../Interfaces';
+import { TopFanSubmissions, InfluencerEvents } from '.'
+import { IFanMail, IEvent } from '../Interfaces';
 
 export interface IInfluencerOverviewProps {
     upcomingEvents: IEvent[],
