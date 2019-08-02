@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Formik, FormikActions } from 'formik';
-import { client } from '../../..';
+import { client } from '../../../client';
 import { gql } from 'apollo-boost'
 import { Form, Button, Container } from 'semantic-ui-react';
 

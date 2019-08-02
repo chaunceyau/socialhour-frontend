@@ -11,10 +11,12 @@ import { InfluencerEvents } from './event/InfluencerEvents'
 import FanMailForm from './fanmail/FanMailForm'
 import FanSubmissionVideo from './fanmail/FanSubmissionVideo'
 import TopFanSubmissions from './fanmail/TopFanSubmissions'
+// influencer dashbaord
+import InfluencerDashboard from './influencer/InfluencerDashboard'
 
 export {
     Navigation, InfluencerCard, RouteWithSubRoutes,
     EventRegistration, EventInformation, InfluencerEvents,
     FanMailForm, TopFanSubmissions, InfluencerPageLoading,
-    SimilarSuggestions, FanSubmissionVideo
+    SimilarSuggestions, FanSubmissionVideo, InfluencerDashboard
 }

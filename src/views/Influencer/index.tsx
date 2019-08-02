@@ -6,9 +6,7 @@ import { gql } from "apollo-boost"
 import { Helmet } from 'react-helmet'
 //
 import {
-    InfluencerPageLoading, FanSubmissionVideo,
-    EventRegistration, SimilarSuggestions, EventInformation,
-    FanMailForm
+    FanSubmissionVideo, SimilarSuggestions, FanMailForm
 } from '../../components';
 
 import InfluencerOverview from './InfluencerOverview';

@@ -5,8 +5,6 @@ import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
 import { PRIMARY_COLOR } from '../../Config';
 import QueryError from '../../components/QueryError';
-import { Link } from 'react-router-dom';
-import { LoadInfluencerProfile } from '../../components/LoadInfluencerProfile';
 import { LoadInfluencerCard } from '../../components/LoadInfluencerCard';
 
 export interface ITrendingFanMailProps extends RouteComponentProps {

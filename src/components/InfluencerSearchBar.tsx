@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Search, SearchProps } from 'semantic-ui-react';
 import { gql } from 'apollo-boost'
 import { withRouter, RouteComponentProps } from 'react-router';
-import { client } from '..';
+import { client } from '../client';
 
 export interface IInfluencerSearchBarProps extends RouteComponentProps {
 }

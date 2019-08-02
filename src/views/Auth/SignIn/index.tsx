@@ -6,7 +6,7 @@ import firebaseui from 'firebaseui'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Container, Grid, Segment, Image } from 'semantic-ui-react'
 import StackedLogo from '../../../assets/logostacked.png'
-import { client } from '../../..'
+import { client } from '../../../client'
 import { gql } from 'apollo-boost'
 import { FirebaseAuthContext } from '../FirebaseAuthProvider';
 

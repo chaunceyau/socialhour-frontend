@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, Image, Icon, Popup, Button, Placeholder } from 'semantic-ui-react';
+import { Card, Image, Icon, Button } from 'semantic-ui-react';
 import { IUser } from '../Interfaces';
 import { withRouter, RouteComponentProps } from 'react-router';
 
