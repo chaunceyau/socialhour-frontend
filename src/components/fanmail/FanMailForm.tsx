@@ -7,7 +7,7 @@ import { gql } from 'apollo-boost';
 import uuid from 'uuid/v4';
 import moment from 'moment'
 // 
-import { client } from '../..';
+import { client } from '../../client';
 import { IInfluencerRouteParamProps, QUERY_INFLUENCER_EVENTS_AND_MAIL } from '../../views/Influencer';
 import { FirebaseAuthContext } from '../../views/Auth/FirebaseAuthProvider';
 import { ErrorResponse } from 'apollo-link-error';

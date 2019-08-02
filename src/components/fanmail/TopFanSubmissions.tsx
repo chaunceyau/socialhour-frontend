@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Segment, Label, Message, Button, Card, Image, Icon, Placeholder } from 'semantic-ui-react';
+import { Segment, Label, Message, Button, Card } from 'semantic-ui-react';
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { IFanMail } from '../../Interfaces';
 import { PRIMARY_COLOR } from '../../Config';

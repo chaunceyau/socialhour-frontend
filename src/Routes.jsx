@@ -10,6 +10,7 @@ import PrivacyPolicy from './views/TermsOfService/PrivacyPolicy';
 import TermsAndConditions from './views/TermsOfService/TermsAndConditions';
 import Chron from './components/Chron';
 import InfluencerNoID from './views/Influencer/InfluencerNoID';
+import InfluencerDashboardView from './views/InfluencerDashboard';
 
 const ROUTE_CONFIG = [
     {
@@ -17,6 +18,7 @@ const ROUTE_CONFIG = [
         component: Home,
         exact: true
     },
+    // influencer 
     {
         path: '/in/:influencerID',
         component: InfluencerLanding,
@@ -25,10 +27,7 @@ const ROUTE_CONFIG = [
         path: '/in',
         component: InfluencerNoID
     },
-    {
-        path: '/chron',
-        component: Chron,
-    },
+    // auth
     {
         path: '/auth/signin',
         component: SignInScreen
@@ -36,6 +35,16 @@ const ROUTE_CONFIG = [
     {
         path: '/auth/logout',
         component: Logout
+    },
+    // influencer dashboard
+    {
+        path: '/influencer',
+        component: InfluencerDashboardView
+    },
+    // 
+    {
+        path: '/chron',
+        component: Chron,
     },
     {
         path: '/create-in',

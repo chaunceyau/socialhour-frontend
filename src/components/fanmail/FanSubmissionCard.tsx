@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { IFanMail } from '../../Interfaces'
-import { Card, Icon, Image, Placeholder } from 'semantic-ui-react'
+import { Card, Icon, Image } from 'semantic-ui-react'
 import { withRouter, RouteComponentProps } from 'react-router'
 const VideoPlaceholder = require('../../assets/placeholder.png')
 

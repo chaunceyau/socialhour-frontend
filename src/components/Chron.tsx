@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button } from 'semantic-ui-react';
-import { client } from '..';
+import { client } from '../client';
 import { gql } from 'apollo-boost';
 
 export interface IChronProps {
