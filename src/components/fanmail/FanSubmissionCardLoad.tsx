@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Card, Placeholder } from 'semantic-ui-react';
 
-export interface ILoadFanSubmissionCardProps {
+export interface IFanSubmissionCardLoadProps {
 }
 
-export const LoadFanSubmissionCard: React.FC<ILoadFanSubmissionCardProps> = (props: ILoadFanSubmissionCardProps) =>
+export const FanSubmissionCardLoad: React.FC<IFanSubmissionCardLoadProps> = (props: IFanSubmissionCardLoadProps) =>
     (
         <Card>
             <Placeholder>

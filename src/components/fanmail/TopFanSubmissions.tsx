@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { IFanMail } from '../../Interfaces';
 import { PRIMARY_COLOR } from '../../Config';
 import FanSubmissionCard from './FanSubmissionCard';
-import { LoadFanSubmissionCard } from './LoadFanSubmissionCard';
+import { FanSubmissionCardLoad } from '../';
 
 export interface ITopFanSubmissionsProps extends RouteComponentProps {
     fanSubmissions: IFanMail[],
@@ -21,9 +21,9 @@ const TopFanSubmissions: React.FC<ITopFanSubmissionsProps> = (props) => (
         {
             props.loading ?
                 <Card.Group itemsPerRow={3}>
-                    <LoadFanSubmissionCard />
-                    <LoadFanSubmissionCard />
-                    <LoadFanSubmissionCard />
+                    <FanSubmissionCardLoad />
+                    <FanSubmissionCardLoad />
+                    <FanSubmissionCardLoad />
                 </Card.Group>
                 :
                 props.fanSubmissions.length > 0 ?

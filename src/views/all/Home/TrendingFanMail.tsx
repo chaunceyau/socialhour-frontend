@@ -3,9 +3,9 @@ import { Segment, Label, Card, Image, Icon, Button, Message, Popup } from 'seman
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
-import { PRIMARY_COLOR } from '../../Config';
-import QueryError from '../../components/QueryError';
-import { LoadInfluencerCard } from '../../components/LoadInfluencerCard';
+import { PRIMARY_COLOR } from '../../../Config';
+import { QueryError } from '../../../components';
+import { InfluencerCardLoad } from '../../../components';
 
 export interface ITrendingFanMailProps extends RouteComponentProps {
 }
@@ -44,7 +44,7 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                         if (loading)
                             return (
                                 <Card.Group stackable itemsPerRow={5}>
-                                    {[...Array(10)].map((value, index) => <LoadInfluencerCard key={index} />)}
+                                    {[...Array(10)].map((value, index) => <InfluencerCardLoad key={index} />)}
                                 </Card.Group>
                             )
                         if (error)

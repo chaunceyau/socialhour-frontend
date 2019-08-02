@@ -6,12 +6,12 @@ import { gql } from "apollo-boost"
 import { Helmet } from 'react-helmet'
 //
 import {
-    FanSubmissionVideo, SimilarSuggestions, FanMailForm
+    FanSubmissionVideo, SimilarSuggestions, QueryError,
+    InfluencerOverview, InfluencerProfileLoad,
+    InfluencerProfile
 } from '../../components';
 
-import InfluencerOverview from './InfluencerOverview';
-import InfluencerProfile from '../../components/InfluencerProfile';
-import { LoadInfluencerProfile } from '../../components/LoadInfluencerProfile';
+import FanSubmissionView from './FanSubmissionView';
 
 export interface IInfluencerLandingProps extends RouteComponentProps<IInfluencerRouteParamProps> {
     routes: RouteComponentProps[]
@@ -34,9 +34,8 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                 variables={{ influencerID: this.props.match.params.influencerID }}
             >
                 {({ loading, error, data }: { loading: any, error?: any, data: any }) => {
-
                     if (error)
-                        return <span>error</span>
+                        return <QueryError />
                     if (data) {
                         const { influencer } = data
                         return (
@@ -61,7 +60,7 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                                         <Grid.Column width={5}>
                                             {
                                                 loading ?
-                                                    <LoadInfluencerProfile />
+                                                    <InfluencerProfileLoad />
                                                     :
                                                     <InfluencerProfile
                                                         id={this.props.match.params.influencerID}
@@ -90,9 +89,11 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                                             <Route
                                                 exact
                                                 path='/in/:influencerID/send'
-                                                render={props => <FanMailForm {...props}
-                                                    influencerID={this.props.match.params.influencerID}
-                                                />}
+                                                render={props =>
+                                                    <FanSubmissionView {...props}
+                                                        influencerID={this.props.match.params.influencerID}
+                                                    />
+                                                }
                                             />
                                             <Route
                                                 exact

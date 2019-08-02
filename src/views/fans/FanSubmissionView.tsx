@@ -8,23 +8,23 @@ import uuid from 'uuid/v4';
 import moment from 'moment'
 // 
 import { client } from '../../client';
-import { IInfluencerRouteParamProps, QUERY_INFLUENCER_EVENTS_AND_MAIL } from '../../views/Influencer';
-import { FirebaseAuthContext } from '../../views/Auth/FirebaseAuthProvider';
+import { IInfluencerRouteParamProps, QUERY_INFLUENCER_EVENTS_AND_MAIL } from './InfluencerLandingView';
+import { FirebaseAuthContext } from '../all/Auth/FirebaseAuthProvider';
 import { ErrorResponse } from 'apollo-link-error';
-import SignIn from '../../views/Auth/SignIn';
+import SignIn from '../all/Auth/SignIn';
 import { COLOR_BACKGROUND_GREY } from '../../Config';
 
-export interface IFanMailFormProps extends RouteComponentProps<IInfluencerRouteParamProps> {
+export interface IFanSubmissionViewProps extends RouteComponentProps<IInfluencerRouteParamProps> {
     influencerID: string
 }
 
-interface IFanMailFormState {
+interface IFanSubmissionViewState {
     video: File | null
     errorMessage: string
     loginModalOpen: boolean
 }
 
-interface IFanMailFormValues {
+interface IFanSubmissionViewValues {
     title: string
     description: string
     tos_accepted: boolean
@@ -82,14 +82,14 @@ const QUERY_LAST_SUBMISSION_TIME = gql`
     }
 `
 
-class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> {
+class FanSubmissionView extends React.Component<IFanSubmissionViewProps, IFanSubmissionViewState> {
     state = {
         video: null,
         errorMessage: '',
         loginModalOpen: false
     }
 
-    async saveVideoAndInformation(values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) {
+    async saveVideoAndInformation(values: IFanSubmissionViewValues, actions: FormikActions<IFanSubmissionViewValues>) {
 
         const videoID = uuid()
         // 2. SAVE VIDEO TO FIREBASE
@@ -131,11 +131,8 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
 
                         // Read the data from our cache for this query.
                         let lastSubmissionData = store.readQuery({ query: QUERY_LAST_SUBMISSION_TIME });
-                        console.log("INFO", lastSubmissionData)
-                        console.log("1")
                         // Set time to now
                         lastSubmissionData.lastSubmission = moment().format()
-                        console.log("2")
                         // Write our data back to the cache.
                         store.writeQuery({ query: QUERY_LAST_SUBMISSION_TIME, data: { ...lastSubmissionData } })
                     },
@@ -180,8 +177,8 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
                             return (
                                 <Formik
                                     initialValues={{ title: '', description: '', tos_accepted: false }}
-                                    validate={(values: IFanMailFormValues) => {
-                                        let errors: FormikErrors<IFanMailFormValues> = {};
+                                    validate={(values: IFanSubmissionViewValues) => {
+                                        let errors: FormikErrors<IFanSubmissionViewValues> = {};
                                         if (!values.tos_accepted)
                                             errors.tos_accepted = "You must accept the Terms & Conditions and Privacy Policy to submit a video."
 
@@ -199,7 +196,7 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
 
                                         return errors;
                                     }}
-                                    onSubmit={async (values: IFanMailFormValues, actions: FormikActions<IFanMailFormValues>) => {
+                                    onSubmit={async (values: IFanSubmissionViewValues, actions: FormikActions<IFanSubmissionViewValues>) => {
                                         // 1. CHECK LAST SUBMISSION TIME
                                         const { data } = await client.query({ query: QUERY_LAST_SUBMISSION_TIME })
                                         // if null.. user hasn't made a submission so no need to check difference in time
@@ -348,4 +345,4 @@ class FanMailForm extends React.Component<IFanMailFormProps, IFanMailFormState> 
     }
 }
 
-export default withRouter(FanMailForm)
+export default withRouter(FanSubmissionView)

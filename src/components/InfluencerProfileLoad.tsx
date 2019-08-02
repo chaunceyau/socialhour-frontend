@@ -1,11 +1,11 @@
 import React from 'react'
 import { Card, Placeholder } from 'semantic-ui-react';
 
-interface ILoadInfluencerProfileProps {
+interface IInfluencerProfileLoadProps {
 
 }
 
-export const LoadInfluencerProfile: React.FC<ILoadInfluencerProfileProps> = (props) => (
+export const InfluencerProfileLoad: React.FC<IInfluencerProfileLoadProps> = (props) => (
     <Card>
         <Placeholder>
             <Placeholder.Image square />

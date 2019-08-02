@@ -1,18 +1,19 @@
-// Import FirebaseAuth and firebase.
 import React from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase'
 import firebaseui from 'firebaseui'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Container, Grid, Segment, Image } from 'semantic-ui-react'
-import StackedLogo from '../../../assets/logostacked.png'
-import { client } from '../../../client'
 import { gql } from 'apollo-boost'
+// 
+import StackedLogo from '../../../../assets/logostacked.png'
+import { client } from '../../../../client'
 import { FirebaseAuthContext } from '../FirebaseAuthProvider';
 
 interface ISignInScreenProps extends RouteComponentProps {
     afterSignIn?: () => void
 }
+
 class SignInScreen extends React.Component<ISignInScreenProps> {
 
     // Configure FirebaseUI.
@@ -86,7 +87,6 @@ class SignInScreen extends React.Component<ISignInScreenProps> {
                     )
                 }}
             </FirebaseAuthContext.Consumer>
-
         );
     }
 }

@@ -1,22 +1,28 @@
-import Navigation from './Navigation'
 import InfluencerCard from './InfluencerCard'
-import RouteWithSubRoutes from './RouteWithSubRoutes'
-import InfluencerPageLoading from './InfluencerPageLoading'
-import SimilarSuggestions from './SimilarSuggestions'
+import InfluencerProfile from './InfluencerProfile'
+import InfluencerOverview from './InfluencerOverview'
+// non-defaults
+import { SimilarSuggestions } from './SimilarSuggestions'
+import { InfluencerCardLoad } from './InfluencerCardLoad'
+import { InfluencerProfileLoad } from './InfluencerProfileLoad'
+import { QueryError } from './errors/QueryError'
+// layout
+import { Footer } from './layout/Footer'
+import { Navigation } from './layout/Navigation'
 // event
-import EventRegistration from './event/EventRegistration'
-import EventInformation from './event/EventInformation'
+import { EventRegistrationForm } from './event/EventRegistrationForm'
 import { InfluencerEvents } from './event/InfluencerEvents'
 // fanmail
-import FanMailForm from './fanmail/FanMailForm'
 import FanSubmissionVideo from './fanmail/FanSubmissionVideo'
+import { FanSubmissionCardLoad } from './fanmail/FanSubmissionCardLoad'
+import FanSubmissionCard from './fanmail/FanSubmissionCard'
 import TopFanSubmissions from './fanmail/TopFanSubmissions'
 // influencer dashbaord
-import InfluencerDashboard from './influencer/InfluencerDashboard'
+import InfluencerDashboard from './influencers/InfluencerDashboard'
 
 export {
-    Navigation, InfluencerCard, RouteWithSubRoutes,
-    EventRegistration, EventInformation, InfluencerEvents,
-    FanMailForm, TopFanSubmissions, InfluencerPageLoading,
-    SimilarSuggestions, FanSubmissionVideo, InfluencerDashboard
+    Navigation, InfluencerCard, EventRegistrationForm, QueryError,
+    InfluencerEvents, TopFanSubmissions, SimilarSuggestions, FanSubmissionVideo,
+    InfluencerDashboard, Footer, InfluencerOverview, InfluencerProfileLoad, InfluencerCardLoad,
+    InfluencerProfile, FanSubmissionCardLoad, FanSubmissionCard
 }
