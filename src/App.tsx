@@ -14,16 +14,16 @@ const App: React.FC = () => (
             <Router>
                 <Navigation />
                 <ContentWrap>
-                    <Container style={{ paddingTop: '1rem', marginBottom: '2rem' }}>
+                    {/* <Container style={{ paddingTop: '1rem', marginBottom: '2rem' }}>
                         <Segment attached='top' style={{ backgroundColor: PRIMARY_COLOR }}>
                             <Header textAlign='center' style={{ color: 'white' }}>
                                 <InfluencerHeader>Influencer Fanmail & Live Events</InfluencerHeader>
                             </Header>
                         </Segment>
-                        <Segment attached='bottom' style={{ padding: '1rem' }}>
+                        <Segment attached='bottom' style={{ padding: '1rem' }}> */}
                             <Routes />
-                        </Segment>
-                    </Container>
+                        {/* </Segment>
+                    </Container> */}
                 </ContentWrap>
                 <Footer />
             </Router>
