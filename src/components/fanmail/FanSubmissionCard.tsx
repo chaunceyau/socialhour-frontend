@@ -12,11 +12,11 @@ export interface IFanSubmissionCardProps extends RouteComponentProps {
 const FanSubmissionCard: React.FC<IFanSubmissionCardProps> = (props: IFanSubmissionCardProps) => (
     <Card
         key={props.mail.id}
-        onClick={() =>
-            props.history.push(`/in/${props.influencerID}/submission/${props.mail.id}`)
+        onClick={() => { }
+            // props.history.push(`/in/${props.influencerID}/submission/${props.mail.id}`)
         }
     >
-        <Image src={VideoPlaceholder} />
+        <Image src={props.mail.video_thumbnail_url !== 'random' ? props.mail.video_thumbnail_url : VideoPlaceholder} style={{ height: 150, objectFit: 'cover' }} />
         <Card.Content>
             <Card.Header>{props.mail.title}</Card.Header>
             <Card.Meta>

@@ -12,6 +12,86 @@ export interface ITopFanSubmissionsProps extends RouteComponentProps {
     loading: boolean
 }
 
+function renderNoFanMailMessage(influencerID: string) {
+    const fake_mail: IFanMail = {
+        id: "",
+        to: {
+            id: influencerID,
+            name: 'fmsdal',
+            title: 'Video Game Streamer',
+            avatar_url: 'https://nyunews.com/wp-content/uploads/2018/02/021218_theme-stranger_samcheng-1-e1518411807488.jpg'
+        },
+        from: {
+            id: '402k',
+            name: 'Mike W.',
+            avatar_url: 'fmlsda'
+        },
+        title: "Love You Nick",
+        description: "not needed",
+        video_url: "not needed",
+        video_thumbnail_url: "https://i.ytimg.com/vi/SaQ4xx4F52Y/maxresdefault.jpg",
+        video_private: false,
+        influencer_watched: false
+    }
+    const fake_mail1: IFanMail = {
+        id: "",
+        to: {
+            id: influencerID,
+            name: 'fmsdal',
+            title: 'Video Game Streamer',
+            avatar_url: 'https://nyunews.com/wp-content/uploads/2018/02/021218_theme-stranger_samcheng-1-e1518411807488.jpg'
+        },
+        from: {
+            id: '402k',
+            name: 'Mike W.',
+            avatar_url: 'fmlsda'
+        },
+        title: "Love You Nick",
+        description: "not needed",
+        video_url: "not needed",
+        video_thumbnail_url: "https://thetigertimes.files.wordpress.com/2014/09/garcia.jpg",
+        video_private: false,
+        influencer_watched: false
+    }
+    const fake_mail2: IFanMail = {
+        id: "",
+        to: {
+            id: influencerID,
+            name: 'fmsdal',
+            title: 'Video Game Streamer',
+            avatar_url: 'https://nyunews.com/wp-content/uploads/2018/02/021218_theme-stranger_samcheng-1-e1518411807488.jpg'
+        },
+        from: {
+            id: '402k',
+            name: 'Mike W.',
+            avatar_url: 'fmlsda'
+        },
+        title: "Love You Nick",
+        description: "not needed",
+        video_url: "not needed",
+        video_thumbnail_url: "https://i.redd.it/1xw0r4hhhqr01.jpg",
+        video_private: false,
+        influencer_watched: false
+    }
+    const SHOW_NO_FANMAIL_MESSAGE = false
+    if (SHOW_NO_FANMAIL_MESSAGE)
+        return (
+            <Message
+                content="This user doesn't have any fanmail. Be the first to leave them a video!"
+            />
+        )
+    return (
+        <React.Fragment>
+            <Card.Group itemsPerRow={3}>
+                <FanSubmissionCard mail={fake_mail} influencerID={influencerID} />
+                <FanSubmissionCard mail={fake_mail1} influencerID={influencerID} />
+                <FanSubmissionCard mail={fake_mail2} influencerID={influencerID} />
+            </Card.Group>
+            <br />
+        </React.Fragment>
+    )
+}
+
 const TopFanSubmissions: React.FC<ITopFanSubmissionsProps> = (props) => (
     <Segment>
         <Label
@@ -35,9 +115,7 @@ const TopFanSubmissions: React.FC<ITopFanSubmissionsProps> = (props) => (
                         }
                     </Card.Group>
                     :
-                    <Message
-                        content="This user doesn't have any fanmail. Be the first to leave them a video!"
-                    />
+                    renderNoFanMailMessage(props.influencerID)
         }
         {
             (props.loading || props.fanSubmissions.length > 0) && <br />
