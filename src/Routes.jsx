@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router';
 
-import Home from './views/all/Home';
+import LandingPage from './views/all/LandingPage';
 import InfluencerLandingView from './views/fans/InfluencerLandingView';
 import SignInScreen from './views/all/Auth/SignIn';
 import Logout from './views/all/Auth/Logout';
@@ -10,12 +10,18 @@ import PrivacyPolicy from './views/all/Legal/PrivacyPolicy';
 import TermsAndConditions from './views/all/Legal/TermsAndConditions';
 import InfluencerNoID from './components/InfluencerNoID';
 import InfluencerDashboardView from './views/influencers/InfluencerDashboardView';
+import ProfileView from './views/all/ProfileView';
 
 const ROUTE_CONFIG = [
     {
         path: '/',
-        component: Home,
+        component: LandingPage,
         exact: true
+    },
+    // profile
+    {
+        path: '/profile',
+        component: ProfileView,
     },
     // influencer 
     {

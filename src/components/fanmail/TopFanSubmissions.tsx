@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Segment, Label, Message, Button, Card } from 'semantic-ui-react';
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { IFanMail } from '../../Interfaces';
+// 
 import { PRIMARY_COLOR } from '../../Config';
-import FanSubmissionCard from './FanSubmissionCard';
-import { FanSubmissionCardLoad } from '../';
+import { IFanMail } from '../../Interfaces';
+import { FanSubmissionCardLoad, FanSubmissionCard } from '../';
 
 export interface ITopFanSubmissionsProps extends RouteComponentProps {
     fanSubmissions: IFanMail[],

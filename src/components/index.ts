@@ -1,6 +1,9 @@
 import InfluencerCard from './InfluencerCard'
-import InfluencerProfile from './InfluencerProfile'
+import Profile from './Profile'
 import InfluencerOverview from './InfluencerOverview'
+import PageViewWrapper from './PageViewWrapper'
+import TrendingFanMail from './TrendingFanMail'
+import UpcomingEvents from './UpcomingEvents'
 // non-defaults
 import { SimilarSuggestions } from './SimilarSuggestions'
 import { InfluencerCardLoad } from './InfluencerCardLoad'
@@ -24,5 +27,6 @@ export {
     Navigation, InfluencerCard, EventRegistrationForm, QueryError,
     InfluencerEvents, TopFanSubmissions, SimilarSuggestions, FanSubmissionVideo,
     InfluencerDashboard, Footer, InfluencerOverview, InfluencerProfileLoad, InfluencerCardLoad,
-    InfluencerProfile, FanSubmissionCardLoad, FanSubmissionCard
+    Profile, FanSubmissionCardLoad, FanSubmissionCard, PageViewWrapper,
+    TrendingFanMail, UpcomingEvents
 }

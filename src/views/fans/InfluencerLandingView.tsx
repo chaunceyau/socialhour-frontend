@@ -8,10 +8,11 @@ import { Helmet } from 'react-helmet'
 import {
     FanSubmissionVideo, SimilarSuggestions, QueryError,
     InfluencerOverview, InfluencerProfileLoad,
-    InfluencerProfile
+    Profile
 } from '../../components';
 
 import FanSubmissionView from './FanSubmissionView';
+import PageViewWrapper from '../../components/PageViewWrapper';
 
 export interface IInfluencerLandingProps extends RouteComponentProps<IInfluencerRouteParamProps> {
     routes: RouteComponentProps[]
@@ -38,8 +39,10 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                         return <QueryError />
                     if (data) {
                         const { influencer } = data
+                        if (!influencer && !loading)
+                            return <span>Influencer id not found...</span>
                         return (
-                            <React.Fragment>
+                            <PageViewWrapper pageType='fan'>
                                 {
                                     !loading &&
                                     <Helmet>
@@ -58,17 +61,7 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                                 <Grid style={{ paddingTop: '1rem' }} stackable>
                                     <Grid.Row columns={2}>
                                         <Grid.Column width={5}>
-                                            {
-                                                loading ?
-                                                    <InfluencerProfileLoad />
-                                                    :
-                                                    <InfluencerProfile
-                                                        id={this.props.match.params.influencerID}
-                                                        name={influencer && influencer.name}
-                                                        avatar_url={influencer && influencer.avatar_url}
-                                                        title={influencer && influencer.title}
-                                                    />
-                                            }
+                                            <Profile loading={loading} {...influencer} />
                                         </Grid.Column>
                                         <Grid.Column width={11}>
                                             <Route
@@ -123,7 +116,7 @@ class InfluencerLanding extends React.Component<IInfluencerLandingProps, IInflue
                                         </Grid.Column>
                                     </Grid.Row>
                                 </Grid>
-                            </React.Fragment>
+                            </PageViewWrapper>
                         )
                     }
                 }}

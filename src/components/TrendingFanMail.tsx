@@ -3,9 +3,9 @@ import { Segment, Label, Card, Image, Icon, Button, Message, Popup } from 'seman
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
-import { PRIMARY_COLOR } from '../../../Config';
-import { QueryError } from '../../../components';
-import { InfluencerCardLoad } from '../../../components';
+import { PRIMARY_COLOR } from '../Config';
+import { QueryError } from '.';
+import { InfluencerCardLoad } from '.';
 
 export interface ITrendingFanMailProps extends RouteComponentProps {
 }
@@ -41,21 +41,14 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                     }}
                 >
                     {({ loading, error, data, fetchMore }: { loading: any, error?: any, data: any, fetchMore: any }) => {
-                        if (loading)
-                            return (
-                                <Card.Group stackable itemsPerRow={5}>
-                                    {[...Array(10)].map((value, index) => <InfluencerCardLoad key={index} />)}
-                                </Card.Group>
-                            )
                         if (error)
                             return <QueryError />
                         if (data) {
                             const { influencers } = data
-                            if (!influencers) return <span></span>
                             return (
                                 <React.Fragment>
                                     <Card.Group stackable itemsPerRow={5}>
-                                        {
+                                        {influencers &&
                                             influencers.map((influencer: any) => (
                                                 <Card
                                                     key={influencer.id}
@@ -89,6 +82,12 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
                                             ))
                                         }
                                     </Card.Group>
+                                    {
+                                        loading &&
+                                        <Card.Group stackable itemsPerRow={5}>
+                                            {[...Array(10)].map((value, index) => <InfluencerCardLoad key={index} />)}
+                                        </Card.Group>
+                                    }
                                     <br />
                                     {
                                         this.state.showNoMoreMessage &&
