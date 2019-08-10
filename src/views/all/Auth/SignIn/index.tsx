@@ -31,13 +31,13 @@ class SignInScreen extends React.Component<ISignInScreenProps> {
         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
         callbacks: {
             signInSuccessWithAuthResult: (authResult: any) => {
+                console.log("SIGN IN ")
                 const { additionalUserInfo, user } = authResult
                 const { uid } = user
                 const { isNewUser, profile } = additionalUserInfo
                 if (isNewUser) {
                     // email, given_name, picture, uid
-                    // TODO: create new user in our database...
-                    client.mutate({
+                    const new_user = client.mutate({
                         mutation: MUTATION_CREATE_NEW_USER,
                         variables: {
                             name: profile.given_name,
@@ -46,12 +46,23 @@ class SignInScreen extends React.Component<ISignInScreenProps> {
                             firebase_id: uid
                         }
                     })
+                        .then((data: any) => {
+                            return true
+                        })
+                        .catch((err: any) => {
+                            console.log('errOR', err)
+                            return true
+                        })
+                    console.log("mutation ", new_user)
+
+                } else {
+                    console.log("NOT NEW")
                 }
                 if (this.props.afterSignIn) {
                     this.props.afterSignIn()
                     return false
                 }
-                return true
+                return false
             }
             // Avoid redirects after sign-in.
         },
@@ -99,12 +110,10 @@ const MUTATION_CREATE_NEW_USER = gql`
         $firebase_id: String!
     ) {
         createUser (
-            data: {
-                name: $name
-                email: $email
-                avatar_url: $avatar_url
-                firebase_id: $firebase_id
-            }
+            name: $name
+            email: $email
+            avatar_url: $avatar_url
+            firebase_id: $firebase_id
         ) {
             id
             name
