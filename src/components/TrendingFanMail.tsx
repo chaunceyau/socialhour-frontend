@@ -3,6 +3,8 @@ import { Segment, Label, Card, Image, Icon, Button, Message, Popup } from 'seman
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
+import { useQuery } from '@apollo/react-hooks'
+// 
 import { PRIMARY_COLOR } from '../Config';
 import { QueryError } from '.';
 import { InfluencerCardLoad } from '.';
@@ -30,6 +32,12 @@ class TrendingFanMail extends React.Component<ITrendingFanMailProps, ITrendingFa
         showNoMoreMessage: false
     }
     render() {
+        // const { loading, error, data } = useQuery(QUERY_TRENDING_INFLUENCERS, {
+        //     variables: {
+        //         first: 10,
+        //         skip: 0
+        //     }
+        // })
         return (
             <Segment>
                 <Label attached='top' content='Trending Fanmail Inboxes' as='h1' />

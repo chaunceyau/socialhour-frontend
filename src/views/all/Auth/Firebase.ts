@@ -2,7 +2,7 @@
 import * as firebase from "firebase";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAISvEcClH4XE4ZRzEbY71CSj_bA5OBWps",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "socialhour.firebaseapp.com",
     databaseURL: "https://socialhour.firebaseio.com",
     projectId: "socialhour",

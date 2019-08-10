@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet'
 import 'semantic-ui-css/semantic.min.css'
 import { client } from './client';
 
+
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Helmet>
