@@ -9,7 +9,7 @@ import FirebaseAuthProvider from './views/all/Auth/FirebaseAuthProvider';
 import Routes from './Routes'
 
 const App: React.FC = () => {
-    console.log('process.env.REACT_APP_FIREBASE_API_KEY', process.env.REACT_APP_FIREBASE_API_KEY)
+    // console.log('process.env.REACT_APP_FIREBASE_API_KEY', process.env.REACT_APP_FIREBASE_API_KEY)
     return (
         <AppWrapperDiv>
             <FirebaseAuthProvider>

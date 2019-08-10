@@ -110,7 +110,7 @@ const TopFanSubmissions: React.FC<ITopFanSubmissionsProps> = (props) => (
                     <Card.Group itemsPerRow={3}>
                         {
                             props.fanSubmissions.map((mail: IFanMail) => (
-                                <FanSubmissionCard mail={mail} influencerID={props.influencerID} />
+                                <FanSubmissionCard key={mail.id} mail={mail} influencerID={props.influencerID} />
                             ))
                         }
                     </Card.Group>
