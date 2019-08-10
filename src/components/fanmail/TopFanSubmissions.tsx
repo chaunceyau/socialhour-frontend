@@ -23,10 +23,10 @@ function renderNoFanMailMessage(influencerID: string) {
         },
         from: {
             id: '402k',
-            name: 'Mike W.',
+            name: 'Elijah W.',
             avatar_url: 'fmlsda'
         },
-        title: "Love You Nick",
+        title: "Glad you're back!",
         description: "not needed",
         video_url: "not needed",
         video_thumbnail_url: "https://i.ytimg.com/vi/SaQ4xx4F52Y/maxresdefault.jpg",
@@ -43,10 +43,10 @@ function renderNoFanMailMessage(influencerID: string) {
         },
         from: {
             id: '402k',
-            name: 'Mike W.',
+            name: 'Devon K.',
             avatar_url: 'fmlsda'
         },
-        title: "Love You Nick",
+        title: "Love You Bro",
         description: "not needed",
         video_url: "not needed",
         video_thumbnail_url: "https://thetigertimes.files.wordpress.com/2014/09/garcia.jpg",
@@ -63,10 +63,10 @@ function renderNoFanMailMessage(influencerID: string) {
         },
         from: {
             id: '402k',
-            name: 'Mike W.',
+            name: 'Elliot M.',
             avatar_url: 'fmlsda'
         },
-        title: "Love You Nick",
+        title: "Funny Story",
         description: "not needed",
         video_url: "not needed",
         video_thumbnail_url: "https://i.redd.it/1xw0r4hhhqr01.jpg",

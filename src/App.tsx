@@ -8,28 +8,31 @@ import { COLOR_BACKGROUND_GREY, PRIMARY_COLOR } from './Config'
 import FirebaseAuthProvider from './views/all/Auth/FirebaseAuthProvider';
 import Routes from './Routes'
 
-const App: React.FC = () => (
-    <AppWrapperDiv>
-        <FirebaseAuthProvider>
-            <Router>
-                <Navigation />
-                <ContentWrap>
-                    {/* <Container style={{ paddingTop: '1rem', marginBottom: '2rem' }}>
+const App: React.FC = () => {
+    console.log('process.env.REACT_APP_FIREBASE_API_KEY', process.env.REACT_APP_FIREBASE_API_KEY)
+    return (
+        <AppWrapperDiv>
+            <FirebaseAuthProvider>
+                <Router>
+                    <Navigation />
+                    <ContentWrap>
+                        {/* <Container style={{ paddingTop: '1rem', marginBottom: '2rem' }}>
                         <Segment attached='top' style={{ backgroundColor: PRIMARY_COLOR }}>
                             <Header textAlign='center' style={{ color: 'white' }}>
                                 <InfluencerHeader>Influencer Fanmail & Live Events</InfluencerHeader>
                             </Header>
                         </Segment>
                         <Segment attached='bottom' style={{ padding: '1rem' }}> */}
-                            <Routes />
+                        <Routes />
                         {/* </Segment>
                     </Container> */}
-                </ContentWrap>
-                <Footer />
-            </Router>
-        </FirebaseAuthProvider>
-    </AppWrapperDiv>
-)
+                    </ContentWrap>
+                    <Footer />
+                </Router>
+            </FirebaseAuthProvider>
+        </AppWrapperDiv>
+    )
+}
 
 const AppWrapperDiv = styled.div`
     background-color: ${COLOR_BACKGROUND_GREY}
